@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Результат поиска</title>
+  <meta name="description" value="The search engine that doesn't track you. Learn More.">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./css/colors.css">
+  <link rel="stylesheet" type="text/css" href="./css/modal.css">
+  <link rel="stylesheet" type="text/css" href="./css/serp.css?1">
+  <link rel="icon" type="image/png" href="./img/se.png">
+  <meta name="author" value="vanGato">
+  <script>
+	function domLoaded() {
+	
+		if(window.location.search) {	
+			const urlParams = new URLSearchParams(window.location.search);
+			const docId = urlParams.get('id');
+			//const hl = urlParams.get('hl');
+			const q = urlParams.get('q');
+			
+			let formData = new FormData(); 
+ 		    formData.append("hl", "on");
+			formData.append("hl.fl", "content");
+			formData.append("hl.fragsize", -1);
+
+			formData.append("fq", "id:" + docId);
+			formData.append("q", q);
+			let xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					const resSolr = JSON.parse(xmlHttp.responseText);
+
+					//console.log(resSolr);
+					//let doc = resSolr.doc.content[0].trim();
+					let doc = resSolr.highlighting[docId].content[0].trim();
+					//console.log(doc)
+/*
+					const keyWordsArr = hl.split(' ');
+					console.log(keyWordsArr)
+					keyWordsArr.forEach(function(keyWord) {
+					console.log(keyWord)
+						doc = doc.split(' ' + keyWord + ' ').join('<span class="serp__match"> ' + keyWord + ' </span>');						doc = doc.split(' ' + keyWord + ' ').join('<span class="serp__match"> ' + keyWord + ' </span>');
+					})
+*/
+
+					doc = doc.split('\n').join('<br>');
+
+					const contentDiv = document.createElement('div');
+					contentDiv.classList.add("res_main");
+					
+					contentDiv.innerHTML = doc
+					
+					const body = document.getElementsByClassName('serp__body')[0]
+					body.append(contentDiv);
+
+					const keysTotal = document.getElementsByClassName("serp__match")
+					let counterPub = document.getElementsByClassName('legend')[0]					
+					counterPub.innerText = "0 из " + keysTotal.length
+				}
+			}
+			
+			xmlHttp.open("POST", "http://192.168.1.43:8983/solr/test/select");
+			xmlHttp.send(formData); 
+	
+
+		} else {
+			// Not found
+		}
+	}
+
+function keyChange(dir) {
+	
+	const counter = document.getElementById('key_oder')
+	let curEl = Number(counter.value);
+	
+	let counterPub = document.getElementsByClassName('legend')[0]
+	let allMatches = [];
+	
+	allMatches.push(document.getElementById("top"));
+	const realMatches = document.getElementsByClassName("serp__match")
+	
+	for (let singleMatch of realMatches) {
+		allMatches.push(singleMatch);    
+	}
+	
+	allMatches.push(document.getElementById("bottom"));
+	
+	if (dir>0) curEl = curEl + 1
+	else curEl = curEl - 1
+
+	if (curEl < allMatches.length && curEl >= 0) {
+
+		allMatches[curEl]
+			.scrollIntoView({behavior: "smooth", block: "center", });
+		counter.value = curEl
+		let m = 0
+		const max = allMatches.length - 1
+		if (curEl == max) m = 1
+		counterPub.innerText = (curEl-m) + " из " + (allMatches.length-2)
+		
+	}
+	
+}	
+  </script>
+</head>
+<body onload="domLoaded();">
+
+        <div class="list-keys switch">
+          <ul id="arrow">
+			  <li><a href="#" onclick="keyChange(0);event.preventDefault();"></a></li>
+			  <span class="legend">0 из 20</span>
+			  <li><a href="#" onclick="keyChange(1);event.preventDefault();"></a></li>
+          </ul>
+		  <input type="hidden" id="key_oder" value=0 />
+        </div>
+
+  <div id="top"></div>
+  <div class="serp">
+    <div class="serp__body">
+
+    </div>
+    <div class="serp__footer" id="bottom">
+      <div class="serp__bottom">
+        <ul class="serp__links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#about">Privacy</a></li>
+          <li><a href="#about">Terms</a></li>
+          <li><a href="#about">Contact Us</a></li>
+        </ul>
+        <p class="serp__copyright">&copy; 2019 vanGato</p>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal" id="about" aria-hidden="true">
+    <div class="modal__dialog">
+      <div class="modal__header">
+        <h2>About</h2>
+        <a href="#" class="modal__close" aria-hidden="true">×</a>
+      </div>
+      <div class="modal__body">
+        <strong>Lorem Ipsum</strong><br>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="modal__footer">
+        <p>Last Update 01.01.2019</p>
+      </div>
+    </div>
+  </div>
+  <!-- /Modal -->
+<script>
+
+</script>  
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Результат поиска</title>
+  <meta name="description" value="The search engine that doesn't track you. Learn More.">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./css/colors.css">
+  <link rel="stylesheet" type="text/css" href="./css/modal.css">
+  <link rel="stylesheet" type="text/css" href="./css/serp.css?1">
+  <link rel="icon" type="image/png" href="./img/se.png">
+  <meta name="author" value="vanGato">
+  <script>
+	function domLoaded() {
+		console.log(document.getElementsByName("q")[0]);
+		document.getElementsByName("q")[0].addEventListener("keydown", function(e) {
+			//if (!e) { var e = window.event; }
+			//e.preventDefault(); // sometimes useful
+
+			// Enter is pressed
+			if (e.keyCode == 13) { searchGo(); }
+		}, false);
+	}  
+  </script>
+</head>
+<body onload="domLoaded();">
+  <div class="serp">
+    <div class="serp__layout">
+      <div class="serp__header">
+        <div class="serp__search">
+          <div class="serp__form">
+            <div>
+              <input name="q" type="search" value="labore et dolore"
+                     class="serp__query" 
+                     maxlength="512"
+                     autocomplete="off"
+                     title="Search"
+                     aria-label="Search"
+                     dir="ltr"
+                     spellcheck="false"
+                     autofocus="autofocus"
+              >
+            </div>
+            <button class="serp__button" onclick="searchGo()">
+              <div class="serp__ico"></div>
+            </button>
+          </div>
+        </div>
+        <a class="serp__logo" href="index.htm"></a>
+
+        <ul class="serp__nav">
+          <!--
+          <li class="serp__active"><a href="index.htm">Web</a></li>
+          <li><a href="index.htm">Images</a></li>
+          <li><a href="index.htm">Videos</a></li>
+          -->
+          <li>Найдено <span id="docsFound">0</span> документов</li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="serp__body">
+      <div class="serp__main serp__results">
+        <div class="serp__web">
+          <span class="serp__label">Реклама</span>
+          <div class="serp__result">
+            <a href="https://scripd.space" target="_blank">
+              <div class="serp__title">Надежная почта</div>
+              <span class="serp__ad">Реклама</span> 
+              <span class="serp__url">https://scripd.space</span>
+            </a><br>
+            <span class="serp__description">Быстрая и безопасная почта. Плюс облако для документов. Адрес на @scientology.ru в подарок!</span>
+          </div>
+        </div>
+        <div class="serp__web" id="searchRes">
+<!--
+          <span class="serp__label">Web Results</span>
+          <div class="serp__result">
+            <a class="serp__video" href="h##" target="_blank">
+              <div class="serp__thumbnail serp__zoom">
+                <img width="116" height="87" src="https://i.ytimg.com/vi/dBxOYE2j55U/default.jpg">
+                <span class="serp__duration">▶ 8:88</span>
+              </div>
+            </a>
+            <a href="##" target="_blank">
+            <span class="serp__title">Video</span><br>
+            <span class="serp__url">https://example.de</span></a><br>
+            <span class="serp__description serp__hide-on-mobile">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut <span class="serp__match">labore et dolore</span> magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. </span>
+          </div>
+-->		
+        </div>
+        <div class="serp__pagination">
+          <ul id="paging">
+          </ul>
+        </div>
+      </div>
+      <div class="serp__sidebar">
+        <div class="serp__sticky">
+          <div class="serp__headline">Wikipedia</div>
+          <div class="serp__wiki">
+            <h2>Web search engine</h2>
+            <p>Software system that is designed to search for information on the World Wide Web</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Wikipedia-Logo-on-Black.jpg" />
+            <p>A <b>web search engine</b> or <b>Internet search engine</b> is a software system that is designed to carry out <b>web search</b>.</p>
+            <p>
+            <small>
+              More about &raquo;Web search engine&laquo; from <a target="_blank" href="https://en.wikipedia.org/wiki/Web_search_engine">Wikipedia</a>
+            </small>
+            </p>
+          </div>
+          <div class="serp__headline">Searches related to &raquo;labore et dolore&laquo;</div>
+          <div class="serp__hint">
+            <a class="serp__related" href="##"><b>Lorem</b> <b>Ipsum</b> Dolore</a><br>
+          </div>
+          <div class="serp__hint">
+            <a class="serp__related" href="##"><b>Lorem</b> <b>Ipsum</b> Dolore</a><br>
+          </div>
+          <div class="serp__hint">
+            <a class="serp__related" href="##"><b>Lorem</b> <b>Ipsum</b> Dolore</a><br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="serp__footer">
+      <div class="serp__bottom">
+        <ul class="serp__links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#about">Privacy</a></li>
+          <li><a href="#about">Terms</a></li>
+          <li><a href="#about">Contact Us</a></li>
+        </ul>
+        <p class="serp__copyright">&copy; 2019 vanGato</p>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal" id="about" aria-hidden="true">
+    <div class="modal__dialog">
+      <div class="modal__header">
+        <h2>About</h2>
+        <a href="#" class="modal__close" aria-hidden="true">×</a>
+      </div>
+      <div class="modal__body">
+        <strong>Lorem Ipsum</strong><br>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div class="modal__footer">
+        <p>Last Update 01.01.2019</p>
+      </div>
+    </div>
+  </div>
+  <!-- /Modal -->
+<script>
+function searchGo(page = 0) {
+  const q = document.getElementsByName("q")[0].value
+  const resPerPage = 3
+  const row = page * resPerPage
+
+  let formData = new FormData(); 
+  formData.append("hl", "on");
+  formData.append("hl.fl", "content");
+  formData.append("start", row);
+  formData.append("rows", resPerPage);
+
+  //formData.append("fq", "id:aka66");
+  
+  formData.append("q", q);
+  
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	  const resSolr = JSON.parse(xmlHttp.responseText);
+	  const docsFound = resSolr.response.numFound;
+	  const docsArray = resSolr.response.docs
+
+	  const docsFoundEl = document.getElementById("docsFound");
+	  docsFoundEl.innerHTML = docsFound;
+
+	  const searchRes = document.getElementById("searchRes");
+	  searchRes.innerHTML = '';
+		
+	  const pageBlock = document.getElementById("paging");
+	  pageBlock.innerHTML = '';
+      
+	  console.log(resSolr);
+	  
+	  if (docsFound > 0) {
+
+		  // Build pagination
+		  const pageTotal = Math.ceil(docsFound / resPerPage)
+		  for (i=0;i<pageTotal;i++) {
+			const pageEl = document.createElement('li');
+			if (i == 0) {
+				const pageLeft = document.createElement('li');
+				const pageLeftRowHtml = '<a href="/" onclick="pageChange(0);event.preventDefault();"></a>';				
+				pageLeft.innerHTML = pageLeftRowHtml
+				pageBlock.append(pageLeft);
+			}
+			if (i == page) {
+				pageEl.classList.add("serp__pagination-active");
+				pageEl.setAttribute('page', i)
+				
+			}
+			let pageNumberHtml = '<a href="/" onclick="searchGo(' + (i) + ');event.preventDefault();"></a>';
+			pageEl.innerHTML = pageNumberHtml
+			pageBlock.append(pageEl);
+			
+			if (i == pageTotal-1) {
+				const pageRight = document.createElement('li');			
+				const pageRightRowHtml = '<a href="/" onclick="pageChange(1);event.preventDefault();"></a>';			
+				pageRight.innerHTML = pageRightRowHtml
+				pageBlock.append(pageRight);
+			}
+		  }
+
+		  // Output search results
+		  docsArray.forEach(function(singleDoc) {
+			const resKey = singleDoc.id
+			const resTitle = singleDoc.id
+			const resPath = singleDoc.resourcename
+			const hca = resSolr.highlighting[resKey].content;
+			let resExcerpt = "";
+			if (hca != undefined) {
+			  hca.forEach(function(item) {
+				resExcerpt = resExcerpt + item
+			  })
+			}
+			
+			const resEntryHtml = '<a href="/res.htm?id=' + resKey + '&q=' + q + '" target="_blank">\
+				  <div class="serp__title">' + resTitle + '</div></a>\
+				    <div class="serp__url">' + resPath + '</div>\
+				<span class="serp__description">' + resExcerpt + '</span>';
+			  //</div>';
+			const resEntry = document.createElement('div');
+			resEntry.classList.add("serp__result");
+			resEntry.innerHTML = resEntryHtml
+			const searchBlock = document.getElementById("searchRes");
+			searchBlock.append(resEntry);
+			<!--<span class="serp__match">labore et dolore</span>-->
+		  })
+		} else {
+			const resEntryHtml = '<p><strong>No search results were found for &raquo;labore et dolore&laquo;</strong></p>\
+          <p>Suggestions:</p>\
+          <ul>\
+            <li>Check that all words are spelled correctly.</li>\
+            <li>Try different search terms.</li>\
+            <li>Try a more general search.</li>\
+            <li>Try fewer search terms.</li>\
+          </ul>';
+        
+			const resEntry = document.createElement('div');
+			resEntry.classList.add("serp__no-results");
+			resEntry.innerHTML = resEntryHtml
+			const searchBlock = document.getElementById("searchRes");
+			searchBlock.append(resEntry);
+	
+		
+		}
+    }
+  }
+  xmlHttp.open("POST", "http://192.168.1.43:8983/solr/test/select");  
+  xmlHttp.send(formData); 
+  
+}
+
+function pageChange(dir) {
+	const curPageEl = document.getElementsByClassName('serp__pagination-active')[0];
+	const curPageN = curPageEl.getAttribute('page');
+	if (dir > 0) searchGo(Number(curPageN) + 1)
+	else searchGo(Number(curPageN) - 1)
+
+}
+
+</script>  
+
+</body>
+</html>
