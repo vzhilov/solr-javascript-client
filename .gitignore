@@ -6,7 +6,7 @@ bin-release/
 
 # Other files and folders
 .settings/
-www/html/conf.js
+www/html/conf/*
 
 # Executables
 *.swf

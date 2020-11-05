@@ -10,7 +10,9 @@
   <link rel="stylesheet" type="text/css" href="./css/serp.css?1">
   <link rel="icon" type="image/png" href="./img/se.png">
   <meta name="author" value="vanGato">
+  <script src="./conf.js"></script>
   <script>
+  console.log(host);
 	function domLoaded() {
 		console.log(document.getElementsByName("q")[0]);
 		document.getElementsByName("q")[0].addEventListener("keydown", function(e) {
@@ -78,7 +80,7 @@
           <div class="serp__result">
             <a class="serp__video" href="h##" target="_blank">
               <div class="serp__thumbnail serp__zoom">
-                <img width="116" height="87" src="https://i.ytimg.com/vi/dBxOYE2j55U/default.jpg">
+                <img width="116" height="87" src="./img/default.jpg">
                 <span class="serp__duration">▶ 8:88</span>
               </div>
             </a>
@@ -100,7 +102,7 @@
           <div class="serp__wiki">
             <h2>Web search engine</h2>
             <p>Software system that is designed to search for information on the World Wide Web</p>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Wikipedia-Logo-on-Black.jpg" />
+            <img src="./img/Wikipedia-Logo-on-Black.jpg" />
             <p>A <b>web search engine</b> or <b>Internet search engine</b> is a software system that is designed to carry out <b>web search</b>.</p>
             <p>
             <small>
