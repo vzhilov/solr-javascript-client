@@ -222,9 +222,15 @@ body {
 }
 
 .serp__nav li {
-  margin-left: 1em;
+  /*margin-left: 1em;*/
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-style: italic;
+    margin-left: 45px;  
+  
+  
 }
-
+/*
 .serp__nav li:first-child {
   margin-left: 0;
 }
@@ -247,7 +253,7 @@ body {
   color: var(--text-color);
   font-weight: 700;
 }
-
+*/
 .serp__results {
   background: var(--border-color);
   padding: 5px 0 5px 0;
@@ -594,6 +600,7 @@ a .serp__title:hover {
 .serp__links a {
   color: inherit;
   text-decoration: none;
+  cursor: default;  
 }
 
 .serp__no-results {

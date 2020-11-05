@@ -12,6 +12,11 @@
   <meta name="author" value="vanGato">
   <script>
 	function domLoaded() {
+
+		const hostname = window.location.hostname
+		document.getElementById('host').innerText = hostname
+		document.getElementById('year').innerText = new Date().getFullYear()
+
 	
 		if(window.location.search) {	
 			const urlParams = new URLSearchParams(window.location.search);
@@ -60,7 +65,7 @@
 				}
 			}
 			
-			xmlHttp.open("POST", "http://192.168.1.43:8983/solr/test/select");
+			xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");
 			xmlHttp.send(formData); 
 	
 
@@ -118,37 +123,13 @@ function keyChange(dir) {
   <div id="top"></div>
   <div class="serp">
     <div class="serp__body">
-
     </div>
     <div class="serp__footer" id="bottom">
       <div class="serp__bottom">
-        <ul class="serp__links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#about">Privacy</a></li>
-          <li><a href="#about">Terms</a></li>
-          <li><a href="#about">Contact Us</a></li>
-        </ul>
-        <p class="serp__copyright">&copy; 2019 vanGato</p>
+        <p class="index__copyright">&copy; <span id="year"></span>&nbsp;<span id="host"></span></p>
       </div>
     </div>
   </div>
-  <!-- Modal -->
-  <div class="modal" id="about" aria-hidden="true">
-    <div class="modal__dialog">
-      <div class="modal__header">
-        <h2>About</h2>
-        <a href="#" class="modal__close" aria-hidden="true">×</a>
-      </div>
-      <div class="modal__body">
-        <strong>Lorem Ipsum</strong><br>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-      <div class="modal__footer">
-        <p>Last Update 01.01.2019</p>
-      </div>
-    </div>
-  </div>
-  <!-- /Modal -->
 <script>
 
 </script>  

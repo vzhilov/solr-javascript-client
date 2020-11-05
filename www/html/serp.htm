@@ -10,11 +10,14 @@
   <link rel="stylesheet" type="text/css" href="./css/serp.css?1">
   <link rel="icon" type="image/png" href="./img/se.png">
   <meta name="author" value="vanGato">
-  <script src="./conf.js"></script>
+  <script src="./conf/conf.js"></script>
   <script>
-  console.log(host);
 	function domLoaded() {
-		console.log(document.getElementsByName("q")[0]);
+
+		const hostname = window.location.hostname
+		document.getElementById('host').innerText = hostname
+		document.getElementById('year').innerText = new Date().getFullYear()
+
 		document.getElementsByName("q")[0].addEventListener("keydown", function(e) {
 			//if (!e) { var e = window.event; }
 			//e.preventDefault(); // sometimes useful
@@ -22,6 +25,32 @@
 			// Enter is pressed
 			if (e.keyCode == 13) { searchGo(); }
 		}, false);
+		
+		if(window.location.search) {
+			const urlParams = new URLSearchParams(window.location.search);
+			const q = urlParams.get('q');
+			document.getElementsByName("q")[0].value = q;
+			window.history.replaceState(null, null, window.location.pathname);
+			searchGo();
+		}
+
+		let formData = new FormData(); 
+		formData.append("q", "*");
+		formData.append("rows", 0);
+		
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			  const resSolr = JSON.parse(xmlHttp.responseText);
+			  const totalDocs = resSolr.response.numFound;
+			  document.getElementById("totalDocs").innerHTML = totalDocs;
+			}
+		}
+		xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");  
+		xmlHttp.send(formData); 
+
+
+		
 	}  
   </script>
 </head>
@@ -32,7 +61,7 @@
         <div class="serp__search">
           <div class="serp__form">
             <div>
-              <input name="q" type="search" value="labore et dolore"
+              <input name="q" type="search" value=""
                      class="serp__query" 
                      maxlength="512"
                      autocomplete="off"
@@ -126,32 +155,16 @@
     <div class="serp__footer">
       <div class="serp__bottom">
         <ul class="serp__links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#about">Privacy</a></li>
-          <li><a href="#about">Terms</a></li>
-          <li><a href="#about">Contact Us</a></li>
+          <li><a href="#">
+			&copy; <span id="year"></span>&nbsp;<span id="host"></span>
+			</a>
+		  </li>
+          <li><a href="#"><span>Всего в базе <span id="totalDocs">0</span> документов</span></a></li>
         </ul>
-        <p class="serp__copyright">&copy; 2019 vanGato</p>
-      </div>
+ 
+	  
     </div>
   </div>
-  <!-- Modal -->
-  <div class="modal" id="about" aria-hidden="true">
-    <div class="modal__dialog">
-      <div class="modal__header">
-        <h2>About</h2>
-        <a href="#" class="modal__close" aria-hidden="true">×</a>
-      </div>
-      <div class="modal__body">
-        <strong>Lorem Ipsum</strong><br>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-      <div class="modal__footer">
-        <p>Last Update 01.01.2019</p>
-      </div>
-    </div>
-  </div>
-  <!-- /Modal -->
 <script>
 function searchGo(page = 0) {
   const q = document.getElementsByName("q")[0].value
@@ -185,6 +198,9 @@ function searchGo(page = 0) {
 	  pageBlock.innerHTML = '';
       
 	  console.log(resSolr);
+	  
+	  
+	  
 	  
 	  if (docsFound > 0) {
 
@@ -241,7 +257,7 @@ function searchGo(page = 0) {
 			<!--<span class="serp__match">labore et dolore</span>-->
 		  })
 		} else {
-			const resEntryHtml = '<p><strong>По запросу &laquo;costodianographics forbidennare aki&raquo; ничего не найдено.</strong></p>\
+			const resEntryHtml = '<p><strong>По запросу &laquo;' + q + '&raquo; ничего не найдено.</strong></p>\
           <p>Рекомендации:</p>\
           <ul>\
             <li>Убедитесь, что все слова написаны без ошибок.</li>\
@@ -250,28 +266,16 @@ function searchGo(page = 0) {
             <li>Попробуйте уменьшить количество слов в запросе.</li>\
           </ul>';
    
-
-
-
-
-
-
-
-
-
-
-   
 			const resEntry = document.createElement('div');
 			resEntry.classList.add("serp__no-results");
 			resEntry.innerHTML = resEntryHtml
 			const searchBlock = document.getElementById("searchRes");
 			searchBlock.append(resEntry);
-	
 		
 		}
     }
   }
-  xmlHttp.open("POST", "http://192.168.1.43:8983/solr/test/select");  
+  xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");  
   xmlHttp.send(formData); 
   
 }

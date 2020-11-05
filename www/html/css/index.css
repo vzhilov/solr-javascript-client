@@ -48,19 +48,26 @@ body {
 }
 
 .index__logo {
+	margin: 1em;
+    font-size: 1.5em;
+}
+/*
   height: 48px;
   width: 300px;
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-image: url("../img/search-engine.png");
+*/
 }
 
 @media (min-width:600px) {
+/*
   .index__logo {
     height: 62px;
     width: 385px;
   }
+*/
 }
 
 .index .index__nav {
