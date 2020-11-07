@@ -10,7 +10,7 @@
   <link rel="stylesheet" type="text/css" href="./css/serp.css?1">
   <link rel="icon" type="image/png" href="./img/se.png">
   <meta name="author" value="vanGato">
-  <script src="./conf/conf.js"></script>
+  <script src="./conf/conf.js"></script>  
   <script>
 	function domLoaded() {
 
@@ -26,18 +26,20 @@
 			const q = urlParams.get('q');
 			
 			let formData = new FormData(); 
- 		    formData.append("hl", "on");
-			formData.append("hl.fl", "content");
-			formData.append("hl.fragsize", -1);
+ 		    formData.append('hl', 'on');
+			formData.append('hl.fl', 'content');
+			formData.append('hl.fragsize', -1);
 
-			formData.append("fq", "id:" + docId);
+			formData.append('fq', 'id:"' + docId + '"');
 			formData.append("q", q);
 			let xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					const resSolr = JSON.parse(xmlHttp.responseText);
 
-					//console.log(resSolr);
+					console.log(debugUrl);
+					console.log(resSolr);
+
 					//let doc = resSolr.doc.content[0].trim();
 					let doc = resSolr.highlighting[docId].content[0].trim();
 					//console.log(doc)
@@ -66,7 +68,17 @@
 				}
 			}
 			
-			xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");
+			const url = "http://" + host + ":8983/solr/" + collection + "/select"
+
+			xmlHttp.open("POST", url);
+
+			// Debug
+			let debugUrl = url + "?";
+			for (var pair of formData.entries()) {
+				debugUrl+=pair[0]+ '=' + pair[1] + "&";
+			}
+
+
 			xmlHttp.send(formData); 
 	
 

@@ -59,6 +59,7 @@
     <div class="serp__layout">
       <div class="serp__header">
         <div class="serp__search">
+          <a class="serp__logo" href="index.htm"></a>
           <div class="serp__form">
             <div>
               <input name="q" type="search" value=""
@@ -77,7 +78,6 @@
             </button>
           </div>
         </div>
-        <a class="serp__logo" href="index.htm"></a>
 
         <ul class="serp__nav">
           <!--
@@ -185,6 +185,9 @@ function searchGo(page = 0) {
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	  const resSolr = JSON.parse(xmlHttp.responseText);
+	  
+	  console.log(resSolr);	  
+	  
 	  const docsFound = resSolr.response.numFound;
 	  const docsArray = resSolr.response.docs
 
@@ -197,9 +200,6 @@ function searchGo(page = 0) {
 	  const pageBlock = document.getElementById("paging");
 	  pageBlock.innerHTML = '';
       
-	  console.log(resSolr);
-	  
-	  
 	  
 	  
 	  if (docsFound > 0) {
@@ -276,7 +276,7 @@ function searchGo(page = 0) {
     }
   }
   xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");  
-  xmlHttp.send(formData); 
+  xmlHttp.send(formData);
   
 }
 

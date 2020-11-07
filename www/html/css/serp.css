@@ -35,6 +35,9 @@ body {
     margin-left: 90px;
     max-width: 1040px;
   }
+  .serp__header {
+	padding-left: 90px;
+  }
 }
 
 .serp__main {
@@ -51,6 +54,9 @@ body {
   .serp__main {
     flex: 66%;
     max-width: 66%;
+  }
+  .serp__header {
+	  padding-left: 90px !important;
   }
 }
 
@@ -77,7 +83,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   min-height: 60px;
-  padding: 10px 10px 0;
+  padding: 10px 10px 10px 18px;
   margin: 0;
 }
 
@@ -88,10 +94,12 @@ body {
   }
 }
 
+
+
 .serp__header>div {
   flex: 1;
 }
-
+/*
 @media (min-width:600px) {
   .serp__header .serp__search {
     order: 2;
@@ -104,28 +112,40 @@ body {
     margin-left: 31px;
   }
 }
-
+*/
 .serp__logo {
   background-image: url("../img/se.png");
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: contain;
-  display: block;
+  /*display: block;*/
   flex: 0 0 40px;
   height: 40px;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 30px;
+  position: absolute;
+  width: 40px;
+  left: 0;  
 }
 
-@media (min-width:600px) {
+@media (min-width:400px) {
   .serp__logo {
-    order: 1;
+	  display: none;
+  }
+
+}
+
+@media (min-width:990px) {
+  .serp__logo {
+	  display: block;
   }
 }
 
+
 .serp__header .serp__nav {
   flex: 100%;
+  order: 3;  
 }
-
+/*
 @media (min-width:600px) {
   .serp__header .serp__nav {
     order: 3;
@@ -138,7 +158,7 @@ body {
     margin-left: 98px;
   }
 }
-
+*/
 .serp__form {
   background-color: var(--background-color);
   border-radius: 2px;
@@ -214,7 +234,7 @@ body {
   padding: 0;
 }
 
-@media (min-width:600px) {
+@media (min-width:400px) {
   .serp__nav {
     justify-content: flex-start;
     justify-content: start;
@@ -222,14 +242,11 @@ body {
 }
 
 .serp__nav li {
-  /*margin-left: 1em;*/
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     font-style: italic;
-    margin-left: 45px;  
-  
-  
 }
+
 /*
 .serp__nav li:first-child {
   margin-left: 0;
@@ -255,7 +272,7 @@ body {
 }
 */
 .serp__results {
-  background: var(--border-color);
+  /*background: var(--border-color);*/
   padding: 5px 0 5px 0;
 }
 
@@ -267,8 +284,8 @@ body {
 }
 
 .serp__results>div {
-  background-color: var(--background-color);
-  box-shadow: 0 2px 1px rgba(0, 0, 0, .1), 0 0 1px rgba(0, 0, 0, .1);
+  /*background-color: var(--background-color);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, .1), 0 0 1px rgba(0, 0, 0, .1);*/
   margin: 5px 10px;
   padding: 5px 8px;
 }
@@ -276,7 +293,7 @@ body {
 @media (min-width:600px) {
   .serp__results>div {
     box-shadow: none;
-    padding: 0;
+    /*padding: 0;*/
   }
 }
 
