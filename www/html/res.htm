@@ -17,12 +17,10 @@
 		const hostname = window.location.hostname
 		document.getElementById('host').innerText = hostname
 		document.getElementById('year').innerText = new Date().getFullYear()
-
 	
 		if(window.location.search) {	
 			const urlParams = new URLSearchParams(window.location.search);
 			const docId = urlParams.get('id');
-			//const hl = urlParams.get('hl');
 			const q = urlParams.get('q');
 			
 			let formData = new FormData(); 
@@ -36,21 +34,7 @@
 			xmlHttp.onreadystatechange = function() {
 				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					const resSolr = JSON.parse(xmlHttp.responseText);
-
-					console.log(debugUrl);
-					console.log(resSolr);
-
-					//let doc = resSolr.doc.content[0].trim();
 					let doc = resSolr.highlighting[docId].content[0].trim();
-					//console.log(doc)
-/*
-					const keyWordsArr = hl.split(' ');
-					console.log(keyWordsArr)
-					keyWordsArr.forEach(function(keyWord) {
-					console.log(keyWord)
-						doc = doc.split(' ' + keyWord + ' ').join('<span class="serp__match"> ' + keyWord + ' </span>');						doc = doc.split(' ' + keyWord + ' ').join('<span class="serp__match"> ' + keyWord + ' </span>');
-					})
-*/
 
 					doc = doc.split('\n').join('<br>');
 
@@ -71,16 +55,7 @@
 			const url = "http://" + host + ":8983/solr/" + collection + "/select"
 
 			xmlHttp.open("POST", url);
-
-			// Debug
-			let debugUrl = url + "?";
-			for (var pair of formData.entries()) {
-				debugUrl+=pair[0]+ '=' + pair[1] + "&";
-			}
-
-
 			xmlHttp.send(formData); 
-	
 
 		} else {
 			// Not found
@@ -116,14 +91,11 @@ function keyChange(dir) {
 		const max = allMatches.length - 1
 		if (curEl == max) m = 1
 		counterPub.innerText = (curEl-m) + " из " + (allMatches.length-2)
-		
 	}
-	
 }	
-  </script>
+</script>
 </head>
 <body onload="domLoaded();">
-
         <div class="list-keys switch">
           <ul id="arrow">
 			  <li><a href="#" onclick="keyChange(0);event.preventDefault();"></a></li>
@@ -132,7 +104,6 @@ function keyChange(dir) {
           </ul>
 		  <input type="hidden" id="key_oder" value=0 />
         </div>
-
   <div id="top"></div>
   <div class="serp">
     <div class="serp__body">
@@ -143,9 +114,5 @@ function keyChange(dir) {
       </div>
     </div>
   </div>
-<script>
-
-</script>  
-
 </body>
 </html>

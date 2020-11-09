@@ -80,11 +80,6 @@
         </div>
 
         <ul class="serp__nav">
-          <!--
-          <li class="serp__active"><a href="index.htm">Web</a></li>
-          <li><a href="index.htm">Images</a></li>
-          <li><a href="index.htm">Videos</a></li>
-          -->
           <li>Найдено <span id="docsFound">0</span> документов</li>
         </ul>
 
@@ -104,21 +99,6 @@
           </div>
         </div>
         <div class="serp__web" id="searchRes">
-<!--
-          <span class="serp__label">Web Results</span>
-          <div class="serp__result">
-            <a class="serp__video" href="h##" target="_blank">
-              <div class="serp__thumbnail serp__zoom">
-                <img width="116" height="87" src="./img/default.jpg">
-                <span class="serp__duration">▶ 8:88</span>
-              </div>
-            </a>
-            <a href="##" target="_blank">
-            <span class="serp__title">Video</span><br>
-            <span class="serp__url">https://example.de</span></a><br>
-            <span class="serp__description serp__hide-on-mobile">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut <span class="serp__match">labore et dolore</span> magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. </span>
-          </div>
--->		
         </div>
         <div class="serp__pagination">
           <ul id="paging">
@@ -176,18 +156,12 @@ function searchGo(page = 0) {
   formData.append("hl.fl", "content");
   formData.append("start", row);
   formData.append("rows", resPerPage);
-
-  //formData.append("fq", "id:aka66");
-  
   formData.append("q", q);
   
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 	  const resSolr = JSON.parse(xmlHttp.responseText);
-	  
-	  console.log(resSolr);	  
-	  
 	  const docsFound = resSolr.response.numFound;
 	  const docsArray = resSolr.response.docs
 
@@ -199,8 +173,6 @@ function searchGo(page = 0) {
 		
 	  const pageBlock = document.getElementById("paging");
 	  pageBlock.innerHTML = '';
-      
-	  
 	  
 	  if (docsFound > 0) {
 
@@ -217,7 +189,6 @@ function searchGo(page = 0) {
 			if (i == page) {
 				pageEl.classList.add("serp__pagination-active");
 				pageEl.setAttribute('page', i)
-				
 			}
 			let pageNumberHtml = '<a href="/" onclick="searchGo(' + (i) + ');event.preventDefault();"></a>';
 			pageEl.innerHTML = pageNumberHtml
@@ -271,13 +242,11 @@ function searchGo(page = 0) {
 			resEntry.innerHTML = resEntryHtml
 			const searchBlock = document.getElementById("searchRes");
 			searchBlock.append(resEntry);
-		
 		}
     }
   }
   xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");  
   xmlHttp.send(formData);
-  
 }
 
 function pageChange(dir) {
@@ -287,8 +256,6 @@ function pageChange(dir) {
 	else searchGo(Number(curPageN) - 1)
 
 }
-
 </script>  
-
 </body>
 </html>
