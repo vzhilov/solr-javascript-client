@@ -26,7 +26,7 @@ http://localhost:8983/
 # Step 5 – Enable CORS within the Solr application server
 isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
 
-<filter>
+```<filter>
    <filter-name>cross-origin</filter-name>
    <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
    <init-param>
@@ -46,7 +46,7 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
  <filter-mapping>
    <filter-name>cross-origin</filter-name>
    <url-pattern>/*</url-pattern>
- </filter-mapping>
+ </filter-mapping>```
  
  # Step 6 – Configure your collection
  For now we just take ready configureation from techproducts example:
