@@ -53,6 +53,42 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
  sudo -u solr /opt/solr/bin/solr -e techproducts
  then go to /opt/solr/server/data/techprducts/conf and copy all the files into /var/solr/data/mycol1
  
+ Set default index directory in /opt/solr/bit/sorl.in.sh:
+ SOLR_HOME=/var/solr/data
+ 
+ Build suggester (https://lucene.apache.org/solr/guide/8_7/suggester.html#dictionary-implementations). In core dir (/var/solr/data/mycol1):
+ solrconfig.xml
+ <searchComponent name="suggest" class="solr.SuggestComponent">
+  <lst name="suggester">
+    <str name="name">mySuggester</str>
+    <str name="lookupImpl">FuzzyLookupFactory</str>
+    <str name="dictionaryImpl">DocumentDictionaryFactory</str>
+    <str name="field">cat</str>
+    <str name="weightField">price</str>
+    <str name="suggestAnalyzerFieldType">string</str>
+    <str name="buildOnStartup">false</str>
+  </lst>
+</searchComponent>
+<requestHandler name="/suggest" class="solr.SearchHandler" startup="lazy">
+  <lst name="defaults">
+    <str name="suggest">true</str>
+    <str name="suggest.count">10</str>
+  </lst>
+  <arr name="components">
+    <str>suggest</str>
+  </arr>
+</requestHandler>
+
+managed_schema:
+<fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
+  <analyzer>
+    <tokenizer class="solr.StandardTokenizerFactory"/>
+    <filter class="solr.LowerCaseFilterFactory"/>
+  </analyzer>
+</fieldType>
+
+working by: http://localhost:8983/solr/test/suggest?suggest=true&suggest.build=true&suggest.dictionary=mySuggester&suggest.q=apple
+  
  # Step 6 – Index your files
  sudo -u solr /opt/solr/bin/post -c mycol1 rootDir/ -m1024M
  
