@@ -38,13 +38,8 @@
 
 					doc = doc.split('\n').join('<br>');
 
-					const contentDiv = document.createElement('div');
-					contentDiv.classList.add("res_main");
-					
-					contentDiv.innerHTML = doc
-					
-					const body = document.getElementsByClassName('serp__body')[0]
-					body.append(contentDiv);
+					const serpBody = document.getElementsByClassName('res_main')[0]
+					serpBody.innerHTML = doc;
 
 					const keysTotal = document.getElementsByClassName("serp__match")
 					let counterPub = document.getElementsByClassName('legend')[0]					
@@ -96,17 +91,30 @@ function keyChange(dir) {
 </script>
 </head>
 <body onload="domLoaded();">
-        <div class="list-keys switch">
-          <ul id="arrow">
-			  <li><a href="#" onclick="keyChange(0);event.preventDefault();"></a></li>
-			  <span class="legend">0 из 20</span>
-			  <li><a href="#" onclick="keyChange(1);event.preventDefault();"></a></li>
-          </ul>
-		  <input type="hidden" id="key_oder" value=0 />
-        </div>
   <div id="top"></div>
+	<div class="list-keys switch">
+	  <ul id="arrow">
+		  <li><a href="#" onclick="keyChange(0);event.preventDefault();"></a></li>
+		  <span class="legend">0 из 20</span>
+		  <li><a href="#" onclick="keyChange(1);event.preventDefault();"></a></li>
+	  </ul>
+	  <input type="hidden" id="key_oder" value=0 />
+	</div>
   <div class="serp">
     <div class="serp__body">
+		<div class="res_main">
+	
+			<!-- Magnifying glass for search wait -->
+			<div class="magnifying-container-sm">
+			  <div class="magnifying">
+				<div class="handle"></div>
+				<div class="middle"></div>
+				<div class="top"></div>
+			  </div>
+			</div>		
+			<!-- End of Magnifying glass block -->
+	
+		</div>
     </div>
     <div class="serp__footer" id="bottom">
       <div class="serp__bottom">

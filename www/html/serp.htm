@@ -98,6 +98,15 @@
             <span class="serp__description">Быстрая и безопасная почта. Плюс облако для документов. Адрес на @scientology.ru в подарок!</span>
           </div>
         </div>
+		<!-- Magnifying glass for search wait -->
+		<div class="magnifying-container-sm unvisible">
+		  <div class="magnifying">
+		    <div class="handle"></div>
+		    <div class="middle"></div>
+		    <div class="top"></div>
+		  </div>
+		</div>		
+		<!-- End of Magnifying glass block -->
         <div class="serp__web" id="searchRes">
         </div>
         <div class="serp__pagination">
@@ -147,6 +156,15 @@
   </div>
 <script>
 function searchGo(page = 0) {
+  const searchRes = document.getElementById("searchRes");
+  searchRes.innerHTML = '';
+	
+  const pageBlock = document.getElementById("paging");
+  pageBlock.innerHTML = '';
+
+  document.getElementsByClassName("magnifying-container-sm")[0]
+	.classList.remove("unvisible");
+
   const q = document.getElementsByName("q")[0].value
   const resPerPage = 20
   const row = page * resPerPage
@@ -161,6 +179,9 @@ function searchGo(page = 0) {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	  document.getElementsByClassName("magnifying-container-sm")[0]
+		.classList.add("unvisible");
+
 	  const resSolr = JSON.parse(xmlHttp.responseText);
 	  const docsFound = resSolr.response.numFound;
 	  const docsArray = resSolr.response.docs
@@ -168,11 +189,6 @@ function searchGo(page = 0) {
 	  const docsFoundEl = document.getElementById("docsFound");
 	  docsFoundEl.innerHTML = docsFound;
 
-	  const searchRes = document.getElementById("searchRes");
-	  searchRes.innerHTML = '';
-		
-	  const pageBlock = document.getElementById("paging");
-	  pageBlock.innerHTML = '';
 	  
 	  if (docsFound > 0) {
 
@@ -216,8 +232,8 @@ function searchGo(page = 0) {
 			}
 			
 			const resEntryHtml = '<a href="/res.htm?id=' + resKey + '&q=' + q + '" target="_blank">\
-				  <div class="serp__title">' + resTitle + '</div></a>\
-				    <div class="serp__url">' + resPath + '</div>\
+				  <div class="serp__title">' + resTitle.replace(/^.*[\\\/]/, '') + '</div></a>\
+				    <div class="serp__url">Общая' + resPath.substring(16) + '</div>\
 				<span class="serp__description">' + resExcerpt + '</span>';
 			  //</div>';
 			const resEntry = document.createElement('div');
