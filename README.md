@@ -26,7 +26,7 @@ http://localhost:8983/
 # Step 5 – Enable CORS within the Solr application server
 isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
 
-```<filter>
+`<filter>
    <filter-name>cross-origin</filter-name>
    <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
    <init-param>
@@ -46,7 +46,7 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
  <filter-mapping>
    <filter-name>cross-origin</filter-name>
    <url-pattern>/*</url-pattern>
- </filter-mapping>```
+ </filter-mapping>`
  
  # Step 6 – Configure your collection
  For now we just take ready configureation from techproducts example:
@@ -58,7 +58,7 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
  
  Build suggester (https://lucene.apache.org/solr/guide/8_7/suggester.html#dictionary-implementations). In core dir (/var/solr/data/mycol1):
  solrconfig.xml
- <searchComponent name="suggest" class="solr.SuggestComponent">
+ `<searchComponent name="suggest" class="solr.SuggestComponent">
   <lst name="suggester">
     <str name="name">mySuggester</str>
     <str name="lookupImpl">FuzzyLookupFactory</str>
@@ -77,15 +77,15 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
   <arr name="components">
     <str>suggest</str>
   </arr>
-</requestHandler>
+</requestHandler>`
 
 managed_schema:
-<fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
+`<fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
   <analyzer>
     <tokenizer class="solr.StandardTokenizerFactory"/>
     <filter class="solr.LowerCaseFilterFactory"/>
   </analyzer>
-</fieldType>
+</fieldType>`
 
 working by: http://localhost:8983/solr/test/suggest?suggest=true&suggest.build=true&suggest.dictionary=mySuggester&suggest.q=apple
   
