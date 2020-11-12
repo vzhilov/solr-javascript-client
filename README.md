@@ -53,8 +53,8 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
  sudo -u solr /opt/solr/bin/solr -e techproducts
  then go to /opt/solr/server/data/techprducts/conf and copy all the files into /var/solr/data/mycol1
  
- Set default index directory in /opt/solr/bit/sorl.in.sh:
- SOLR_HOME=/var/solr/data
+Set production memory size in /etc/default/sorl.in.sh:
+SOLR_JAVA_MEM="-Xms1024m -Xmx1024m"
  
  Build suggester (https://lucene.apache.org/solr/guide/8_7/suggester.html#dictionary-implementations). In core dir (/var/solr/data/mycol1):
  solrconfig.xml
