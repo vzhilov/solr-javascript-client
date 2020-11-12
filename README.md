@@ -13,9 +13,9 @@ OpenJDK 64-Bit Server VM (build 11.0.4+11-post-Ubuntu-1ubuntu218.04.3, mixed mod
 
 # Step 2 – Install Apache Solr on Ubuntu
 cd /opt
-wget https://archive.apache.org/dist/lucene/solr/8.5.2/solr-8.5.2.tgz
-tar xzf solr-8.5.2.tgz solr-8.5.2/bin/install_solr_service.sh --strip-components=2
-sudo bash ./install_solr_service.sh solr-8.5.2.tgz
+wget https://archive.apache.org/dist/lucene/solr/8.7.0/solr-8.7.0.tgz
+tar xzf solr-8.7.0.tgz solr-8.7.0/bin/install_solr_service.sh --strip-components=2
+sudo bash ./install_solr_service.sh solr-8.7.0.tgz -i /opt -d /var/solr -u solr -s solr -p 8983
 
 # Step 3 – Create Solr Collection
 sudo u solr /opt/solr/bin/solr create -c mycol1 -n data_driven_schema_configs
