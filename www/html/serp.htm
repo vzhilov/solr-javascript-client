@@ -116,27 +116,11 @@
       </div>
       <div class="serp__sidebar">
         <div class="serp__sticky">
-          <div class="serp__headline">Wikipedia</div>
+          <div class="serp__headline">Похожие результаты</div>
           <div class="serp__wiki">
-            <h2>Web search engine</h2>
-            <p>Software system that is designed to search for information on the World Wide Web</p>
-            <img src="./img/Wikipedia-Logo-on-Black.jpg" />
-            <p>A <b>web search engine</b> or <b>Internet search engine</b> is a software system that is designed to carry out <b>web search</b>.</p>
-            <p>
-            <small>
-              More about &raquo;Web search engine&laquo; from <a target="_blank" href="https://en.wikipedia.org/wiki/Web_search_engine">Wikipedia</a>
-            </small>
-            </p>
-          </div>
-          <div class="serp__headline">Searches related to &raquo;labore et dolore&laquo;</div>
-          <div class="serp__hint">
-            <a class="serp__related" href="##"><b>Lorem</b> <b>Ipsum</b> Dolore</a><br>
-          </div>
-          <div class="serp__hint">
-            <a class="serp__related" href="##"><b>Lorem</b> <b>Ipsum</b> Dolore</a><br>
-          </div>
-          <div class="serp__hint">
-            <a class="serp__related" href="##"><b>Lorem</b> <b>Ipsum</b> Dolore</a><br>
+            <h2>Возможно вы ищите:</h2>
+			<div class="suggester"></div>
+
           </div>
         </div>
       </div>
@@ -263,6 +247,67 @@ function searchGo(page = 0) {
   }
   xmlHttp.open("POST", "http://" + host + ":8983/solr/" + collection + "/select");  
   xmlHttp.send(formData);
+  
+  
+  
+  
+  let formDataSuggest = new FormData(); 
+
+  //formDataSuggest.append("spellcheck.build", "true");
+  //formDataSuggest.append("spellcheck.reload", "true");
+  formDataSuggest.append("spellcheck", "on");
+  const spellq = q.slice(0, -1);
+  console.log(spellq);
+  formDataSuggest.append("spellcheck.q", spellq);
+  
+  var xmlHttpSuggest = new XMLHttpRequest();
+  xmlHttpSuggest.onreadystatechange = function() {
+    if (xmlHttpSuggest.readyState == 4 && xmlHttpSuggest.status == 200) {
+	  //document.getElementsByClassName("magnifying-container-sm")[0]
+		//.classList.add("unvisible");
+
+	  const resSolr = JSON.parse(xmlHttpSuggest.responseText);
+	  console.log(resSolr)
+	  //const docsFound = resSolr.response.numFoun;
+	  const suggestArray = resSolr.spellcheck.suggestions[1].suggestion
+	  console.log(suggestArray)
+	  const docsSuggestEl = document.getElementsByClassName("suggester")[0];
+	  docsSuggestEl.innerHTML = '';
+
+		const freqArray = suggestArray.map(a => a.freq)
+		const min = Math.min.apply(null, freqArray),
+		max = Math.max.apply(null, freqArray);
+		const freqStep = max - min
+		const fontMin = 10
+		const fontMax = 24
+		const fontStep = fontMax - fontMin
+		const fontq = freqStep/fontStep
+		
+	  if (suggestArray.length > 0) {
+
+		  // Output suggest results
+		  suggestArray.forEach(function(singleSuggest) {
+			const suggestWord = singleSuggest.word
+			const suggestFreq = singleSuggest.freq
+			const suggestFont = Math.floor(suggestFreq/fontq)+fontMin
+			
+			const sugEntryHtml = '<a href="/serp.htm?q=' + suggestWord + '" target="_blank">\
+				  <span style="font-size:' + suggestFont + 'px">' + suggestWord + ' (' + suggestFreq + ')</span></a>';
+			docsSuggestEl.insertAdjacentHTML('beforeend', sugEntryHtml);
+		  })
+		} else {
+
+			const sugEntryHtml = '<p><strong>Для запрос &laquo;' + q + '&raquo; рекомендаций нет </strong></p>';
+   
+			const sugEntry = document.createElement('div');
+			docsSuggestEl.append(sugEntryHtml);		
+
+		}
+    }
+  }
+  xmlHttpSuggest.open("POST", "http://" + host + ":8983/solr/" + collection + "/spell");  
+  xmlHttpSuggest.send(formDataSuggest);  
+  
 }
 
 function pageChange(dir) {
