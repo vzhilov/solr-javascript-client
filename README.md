@@ -13,9 +13,9 @@ OpenJDK 64-Bit Server VM (build 11.0.4+11-post-Ubuntu-1ubuntu218.04.3, mixed mod
 
 # Step 2 – Install Apache Solr on Ubuntu
 cd /opt
-wget https://archive.apache.org/dist/lucene/solr/8.5.2/solr-8.5.2.tgz
-tar xzf solr-8.5.2.tgz solr-8.5.2/bin/install_solr_service.sh --strip-components=2
-sudo bash ./install_solr_service.sh solr-8.5.2.tgz
+wget https://archive.apache.org/dist/lucene/solr/8.7.0/solr-8.7.0.tgz
+tar xzf solr-8.7.0.tgz solr-8.7.0/bin/install_solr_service.sh --strip-components=2
+sudo bash ./install_solr_service.sh solr-8.7.0.tgz -i /opt -d /var/solr -u solr -s solr -p 8983
 
 # Step 3 – Create Solr Collection
 sudo u solr /opt/solr/bin/solr create -c mycol1 -n data_driven_schema_configs
@@ -26,7 +26,7 @@ http://localhost:8983/
 # Step 5 – Enable CORS within the Solr application server
 isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
 
-<filter>
+`<filter>
    <filter-name>cross-origin</filter-name>
    <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
    <init-param>
@@ -46,13 +46,49 @@ isert into /opt/solr/server/solr-webapp/webapp/WEB-INF/web.xml
  <filter-mapping>
    <filter-name>cross-origin</filter-name>
    <url-pattern>/*</url-pattern>
- </filter-mapping>
+ </filter-mapping>`
  
  # Step 6 – Configure your collection
  For now we just take ready configureation from techproducts example:
  sudo -u solr /opt/solr/bin/solr -e techproducts
  then go to /opt/solr/server/data/techprducts/conf and copy all the files into /var/solr/data/mycol1
  
+Set production memory size in /etc/default/sorl.in.sh:
+SOLR_JAVA_MEM="-Xms1024m -Xmx1024m"
+ 
+ Build suggester (https://lucene.apache.org/solr/guide/8_7/suggester.html#dictionary-implementations). In core dir (/var/solr/data/mycol1):
+ solrconfig.xml
+ `<searchComponent name="suggest" class="solr.SuggestComponent">
+  <lst name="suggester">
+    <str name="name">mySuggester</str>
+    <str name="lookupImpl">FuzzyLookupFactory</str>
+    <str name="dictionaryImpl">DocumentDictionaryFactory</str>
+    <str name="field">cat</str>
+    <str name="weightField">price</str>
+    <str name="suggestAnalyzerFieldType">string</str>
+    <str name="buildOnStartup">false</str>
+  </lst>
+</searchComponent>
+<requestHandler name="/suggest" class="solr.SearchHandler" startup="lazy">
+  <lst name="defaults">
+    <str name="suggest">true</str>
+    <str name="suggest.count">10</str>
+  </lst>
+  <arr name="components">
+    <str>suggest</str>
+  </arr>
+</requestHandler>`
+
+managed_schema:
+`<fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
+  <analyzer>
+    <tokenizer class="solr.StandardTokenizerFactory"/>
+    <filter class="solr.LowerCaseFilterFactory"/>
+  </analyzer>
+</fieldType>`
+
+working by: http://localhost:8983/solr/test/suggest?suggest=true&suggest.build=true&suggest.dictionary=mySuggester&suggest.q=apple
+  
  # Step 6 – Index your files
  sudo -u solr /opt/solr/bin/post -c mycol1 rootDir/ -m1024M
  
