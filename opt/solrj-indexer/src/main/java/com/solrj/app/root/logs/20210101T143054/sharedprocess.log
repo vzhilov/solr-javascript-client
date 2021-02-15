@@ -1,0 +1,44 @@
+[2021-01-01 14:31:00.470] [sharedprocess] [info] main {"machineId":"df45eaae9f737664741bd66ffae2d24e5e7b3f35de57706ed23790ae502f2de3","windowId":2}
+[2021-01-01 14:31:41.239] [sharedprocess] [info] Starting to clean up unused language packs.
+[2021-01-01 14:31:43.912] [sharedprocess] [info] Installing extension: vscjava.vscode-java-pack
+[2021-01-01 14:31:44.910] [sharedprocess] [info] Downloaded extension: vscjava.vscode-java-pack undefined
+[2021-01-01 14:31:45.085] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.vscjava.vscode-java-pack-0.12.1: vscjava.vscode-java-pack
+[2021-01-01 14:31:45.085] [sharedprocess] [info] Renamed to /root/.vscode/extensions/vscjava.vscode-java-pack-0.12.1
+[2021-01-01 14:31:45.087] [sharedprocess] [info] Installation completed. vscjava.vscode-java-pack
+[2021-01-01 14:31:45.611] [sharedprocess] [info] Installing extension: visualstudioexptteam.vscodeintellicode
+[2021-01-01 14:31:45.611] [sharedprocess] [info] Installing extension: redhat.java
+[2021-01-01 14:31:45.612] [sharedprocess] [info] Installing extension: vscjava.vscode-java-debug
+[2021-01-01 14:31:45.612] [sharedprocess] [info] Installing extension: vscjava.vscode-maven
+[2021-01-01 14:31:45.613] [sharedprocess] [info] Installing extension: vscjava.vscode-java-test
+[2021-01-01 14:31:45.613] [sharedprocess] [info] Installing extension: vscjava.vscode-java-dependency
+[2021-01-01 14:31:48.562] [sharedprocess] [info] Downloaded extension: vscjava.vscode-java-dependency undefined
+[2021-01-01 14:31:48.695] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.vscjava.vscode-java-dependency-0.16.0: vscjava.vscode-java-dependency
+[2021-01-01 14:31:48.695] [sharedprocess] [info] Renamed to /root/.vscode/extensions/vscjava.vscode-java-dependency-0.16.0
+[2021-01-01 14:31:48.697] [sharedprocess] [info] Installation completed. vscjava.vscode-java-dependency
+[2021-01-01 14:31:48.877] [sharedprocess] [info] Extensions installed successfully: vscjava.vscode-java-dependency
+[2021-01-01 14:31:51.552] [sharedprocess] [info] Downloaded extension: vscjava.vscode-java-debug undefined
+[2021-01-01 14:31:51.888] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.vscjava.vscode-java-debug-0.30.0: vscjava.vscode-java-debug
+[2021-01-01 14:31:51.888] [sharedprocess] [info] Renamed to /root/.vscode/extensions/vscjava.vscode-java-debug-0.30.0
+[2021-01-01 14:31:51.892] [sharedprocess] [info] Installation completed. vscjava.vscode-java-debug
+[2021-01-01 14:31:52.110] [sharedprocess] [info] Extensions installed successfully: vscjava.vscode-java-debug
+[2021-01-01 14:31:52.503] [sharedprocess] [info] Downloaded extension: vscjava.vscode-java-test undefined
+[2021-01-01 14:31:52.854] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.vscjava.vscode-java-test-0.26.1: vscjava.vscode-java-test
+[2021-01-01 14:31:52.855] [sharedprocess] [info] Renamed to /root/.vscode/extensions/vscjava.vscode-java-test-0.26.1
+[2021-01-01 14:31:52.857] [sharedprocess] [info] Installation completed. vscjava.vscode-java-test
+[2021-01-01 14:32:05.697] [sharedprocess] [info] Downloaded extension: vscjava.vscode-maven undefined
+[2021-01-01 14:32:06.799] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.vscjava.vscode-maven-0.27.0: vscjava.vscode-maven
+[2021-01-01 14:32:06.799] [sharedprocess] [info] Renamed to /root/.vscode/extensions/vscjava.vscode-maven-0.27.0
+[2021-01-01 14:32:06.802] [sharedprocess] [info] Installation completed. vscjava.vscode-maven
+[2021-01-01 14:32:06.997] [sharedprocess] [info] Extensions installed successfully: vscjava.vscode-maven
+[2021-01-01 14:32:09.221] [sharedprocess] [info] Downloaded extension: visualstudioexptteam.vscodeintellicode undefined
+[2021-01-01 14:32:10.879] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.visualstudioexptteam.vscodeintellicode-1.2.10: visualstudioexptteam.vscodeintellicode
+[2021-01-01 14:32:10.880] [sharedprocess] [info] Renamed to /root/.vscode/extensions/visualstudioexptteam.vscodeintellicode-1.2.10
+[2021-01-01 14:32:10.881] [sharedprocess] [info] Installation completed. visualstudioexptteam.vscodeintellicode
+[2021-01-01 14:32:11.080] [sharedprocess] [info] Extensions installed successfully: visualstudioexptteam.vscodeintellicode
+[2021-01-01 14:32:23.952] [sharedprocess] [info] Downloaded extension: redhat.java undefined
+[2021-01-01 14:32:26.896] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.redhat.java-0.73.0: redhat.java
+[2021-01-01 14:32:26.896] [sharedprocess] [info] Renamed to /root/.vscode/extensions/redhat.java-0.73.0
+[2021-01-01 14:32:26.902] [sharedprocess] [info] Installation completed. redhat.java
+[2021-01-01 14:32:27.089] [sharedprocess] [info] Extensions installed successfully: redhat.java
+[2021-01-01 14:32:27.093] [sharedprocess] [info] Extensions installed successfully: vscjava.vscode-java-test
+[2021-01-01 14:32:27.095] [sharedprocess] [info] Extensions installed successfully: vscjava.vscode-java-pack

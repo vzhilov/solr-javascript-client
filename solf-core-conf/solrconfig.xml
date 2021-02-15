@@ -35,7 +35,7 @@
        that you fully re-index after changing this setting as it can
        affect both how text is indexed and queried.
   -->
-  <luceneMatchVersion>8.6.3</luceneMatchVersion>
+  <luceneMatchVersion>8.7.0</luceneMatchVersion>
 
   <!-- <lib/> directives can be used to instruct Solr to load any Jars
        identified and use them to resolve any "plugins" specified in
@@ -85,6 +85,12 @@
 
   <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+
+  <!-- Form MySQL Import Slava 
+  <lib dir="/usr/share/java/" regex="mysql-connector-java-\d.*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-\d.*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-extras-\d.*\.jar" />  
+  -->
 
   <!-- an exact 'path' can be used instead of a 'dir' to specify a
        specific jar file.  This will cause a serious error to be logged
@@ -618,6 +624,48 @@
 
   </query>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Circuit Breaker Section - This section consists of configurations for
+     circuit breakers
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <circuitBreaker>
+    <!-- Enable Circuit Breakers
+
+     Circuit breakers are designed to allow stability and predictable query
+     execution. They prevent operations that can take down the node and cause
+     noisy neighbour issues.
+
+     This flag is the uber control switch which controls the activation/deactivation of all circuit
+     breakers. At the moment, the only circuit breaker (max JVM circuit breaker) does not have its
+     own specific configuration. However, if a circuit breaker wishes to be independently configurable,
+     they are free to add their specific configuration but need to ensure that this flag is always
+     respected - this should have veto over all independent configuration flags.
+    -->
+    <!--
+   <useCircuitBreakers>true</useCircuitBreakers>
+    -->
+
+    <!-- Memory Circuit Breaker Threshold In Percentage
+
+     Specific configuration for max JVM heap usage circuit breaker. This configuration defines the
+     threshold percentage of maximum heap allocated beyond which queries will be rejected until the
+     current JVM usage goes below the threshold. The valid value for this range is 50-95.
+
+     Consider a scenario where the max heap allocated is 4 GB and memoryCircuitBreakerThresholdPct is
+     defined as 75. Threshold JVM usage will be 4 * 0.75 = 3 GB. Its generally a good idea to keep this value between 75 - 80% of maximum heap
+     allocated.
+
+     If, at any point, the current JVM heap usage goes above 3 GB, queries will be rejected until the heap usage goes below 3 GB again.
+     If you see queries getting rejected with 503 error code, check for "Circuit Breakers tripped"
+     in logs and the corresponding error message should tell you what transpired (if the failure
+     was caused by tripped circuit breakers).
+    -->
+    <!--
+   <memoryCircuitBreakerThresholdPct>100</memoryCircuitBreakerThresholdPct>
+    -->
+
+  </circuitBreaker>
+
 
   <!-- Request Dispatcher
 
@@ -929,9 +977,20 @@
 
   <initParams path="/update/**,/query,/select,/tvrh,/elevate,/spell,/browse,update">
     <lst name="defaults">
-      <str name="df">text</str>
+      <!--<str name="df">subject_ru</str>-->
     </lst>
   </initParams>
+
+  <requestHandler name="/update" class="solr.UpdateRequestHandler">
+        <lst name="defaults">
+          <!--
+          <str name="update.chain">dedupe_exact</str> 
+          <str name="update.chain">dedupe_approx</str>
+          <str name="update.chain">langid</str>
+          -->
+       </lst>
+  </requestHandler>
+
 
   <!-- The following are implicitly added
   <requestHandler name="/update/json" class="solr.UpdateRequestHandler">
@@ -1026,7 +1085,7 @@
     <!-- a spellchecker built from a field of the main index -->
     <lst name="spellchecker">
       <str name="name">default</str>
-      <str name="field">text</str>
+      <str name="field">suggest</str>
       <str name="classname">solr.DirectSolrSpellChecker</str>
       <!-- the spellcheck distance measure used, the default is the internal levenshtein -->
       <str name="distanceMeasure">internal</str>
@@ -1042,21 +1101,21 @@
       <int name="minQueryLength">4</int>
       <!-- maximum threshold of documents a query term can appear to be considered for correction -->
       <float name="maxQueryFrequency">0.01</float>
-      <!-- uncomment this to require suggestions to occur in 1% of the documents
+      <!-- uncomment this to require suggestions to occur in 1% of the documents-->
         <float name="thresholdTokenFrequency">.01</float>
-      -->
+      
     </lst>
 
-    <!-- a spellchecker that can break or combine words.  See "/spell" handler below for usage -->
+    <!-- a spellchecker that can break or combine words.  See "/spell" handler below for usage 
     <lst name="spellchecker">
       <str name="name">wordbreak</str>
       <str name="classname">solr.WordBreakSolrSpellChecker</str>
-      <str name="field">name</str>
+      <str name="field">suggest</str>
       <str name="combineWords">true</str>
       <str name="breakWords">true</str>
       <int name="maxChanges">10</int>
     </lst>
-
+-->
     <!-- a spellchecker that uses a different distance measure -->
     <!--
        <lst name="spellchecker">
@@ -1117,7 +1176,7 @@
            collations (re-written queries) can include a combination of
            corrections from both spellcheckers -->
       <str name="spellcheck.dictionary">default</str>
-      <str name="spellcheck.dictionary">wordbreak</str>
+   <!--   <str name="spellcheck.dictionary">wordbreak</str>-->
       <str name="spellcheck">on</str>
       <str name="spellcheck.extendedResults">true</str>
       <str name="spellcheck.count">10</str>
@@ -1144,22 +1203,72 @@
     -->
   <searchComponent name="suggest" class="solr.SuggestComponent">
     <lst name="suggester">
-      <str name="name">mySuggester</str>
-      <str name="lookupImpl">FuzzyLookupFactory</str>
+      <str name="name">emails_sgs</str>
+      <str name="lookupImpl">BlendedInfixLookupFactory</str>  <!-- FuzzyLookupFactory -->
+      <str name="suggestAnalyzerFieldType">suggestTypeLc</str> 
       <str name="dictionaryImpl">DocumentDictionaryFactory</str>
-      <str name="field">content</str>
+      <str name="field">emails_sgs</str>
+      <str name="contextField">user_id</str>
+      <str name="indexPath">emails_sgs</str>
       <!--<str name="weightField">price</str>-->
-      <str name="suggestAnalyzerFieldType">string</str>
       <str name="buildOnStartup">false</str>
+      <str name="buildOnCommit">false</str>
     </lst>
+
+
+    <lst name="suggester">
+      <str name="name">mimeo_sgs</str>
+      <str name="lookupImpl">BlendedInfixLookupFactory</str> 
+      <str name="suggestAnalyzerFieldType">suggestTypeLc</str> 
+      <str name="dictionaryImpl">DocumentDictionaryFactory</str>
+      <str name="field">mimeo_sgs</str>
+      <!--<str name="contextField">search_area</str>-->
+      <str name="indexPath">mimeo_sgs</str>
+      <!--<str name="weightField">price</str>-->
+      <str name="buildOnStartup">false</str>
+      <str name="buildOnCommit">false</str>
+    </lst>
+
+<!--
+    <lst name="suggester">
+      <str name="name">mySuggester_all</str>
+      <str name="lookupImpl">FreeTextLookupFactory</str>
+      <str name="suggestFreeTextAnalyzerFieldType">suggestTypeLc</str>
+      <str name="dictionaryImpl">DocumentDictionaryFactory</str>      
+      <str name="field">suggest</str>
+      <!-<str name="contextField">user_id</str> ->
+      <!-<str name="weightField">price</str>->
+      <str name="buildOnStartup">false</str>
+      <str name="buildOnCommit">false</str>
+    </lst>
+-->    
   </searchComponent>
 
   <requestHandler name="/suggest" class="solr.SearchHandler"
                   startup="lazy" >
     <lst name="defaults">
-      <str name="suggest.dictionary">mySuggester</str>
-	  <str name="suggest">true</str>
+      <str name="suggest">true</str>
       <str name="suggest.count">10</str>
+      <str name="suggest.dictionary">emails_sgs</str>
+      <str name="suggest.dictionary">mimeo_sgs</str>
+    </lst>
+    <arr name="components">
+      <str>suggest</str>
+    </arr>
+  </requestHandler>
+
+
+<!-- More Like This documents-->
+
+  <requestHandler name="/mlt" class="solr.MoreLikeThisHandler"
+                  startup="lazy" >
+    <lst name="defaults">
+      <str name="suggest">true</str>
+      <str name="suggest.count">10</str>
+      <str name="suggest.dictionary">mySuggester_sbj</str>
+<!---->
+      <str name="suggest.dictionary">mySuggester_cnt</str>
+      <str name="suggest.dictionary">mySuggester_att</str>
     </lst>
     <arr name="components">
       <str>suggest</str>
@@ -1307,17 +1416,13 @@
        results for a given query regardless of the normal lucene
        scoring.
     -->
-  <!-- Slava
   <searchComponent name="elevator" class="solr.QueryElevationComponent" >
-  -->
     <!-- pick a fieldType to analyze queries -->
-  <!-- Slava
     <str name="queryFieldType">string</str>
     <str name="config-file">elevate.xml</str>
   </searchComponent>
-  -->
+
   <!-- A request handler for demonstrating the elevator component -->
-   <!-- Slava
   <requestHandler name="/elevate" class="solr.SearchHandler" startup="lazy">
     <lst name="defaults">
       <str name="echoParams">explicit</str>
@@ -1326,7 +1431,36 @@
       <str>elevator</str>
     </arr>
   </requestHandler>
+
+
+
+
+<!-- To handle user requests -->
+<searchComponent name="analytics" class="org.apache.solr.handler.component.AnalyticsComponent" />
+
+<requestHandler name="/select" class="solr.SearchHandler">
+    <arr name="last-components">
+        <str>analytics</str>
+    </arr>
+</requestHandler>
+
+<!-- For inter-shard communication during distributed requests -->
+<requestHandler name="/analytics" class="org.apache.solr.handler.AnalyticsHandler" />
+
+
+
+
+<!-- Import from MySQL database Slava 
+<requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
+    <lst name="defaults">
+    <str name="config">data-config.xml</str>
+    </lst>
+</requestHandler>
 -->
+
+
+
+
   <!-- Highlighting Component
 
        http://wiki.apache.org/solr/HighlightingParameters
@@ -1339,7 +1473,7 @@
                   default="true"
                   class="solr.highlight.GapFragmenter">
         <lst name="defaults">
-          <int name="hl.fragsize">300</int>
+          <int name="hl.fragsize">100</int>
         </lst>
       </fragmenter>
 
@@ -1452,13 +1586,26 @@
 
     -->
   <!--
-     <updateRequestProcessorChain name="dedupe">
+     <updateRequestProcessorChain name="dedupe_exact" default="true">
+       <processor class="solr.update.processor.SignatureUpdateProcessorFactory">
+         <bool name="enabled">true</bool>
+         <str name="signatureField">signature_exact</str>
+         <bool name="overwriteDupes">false</bool>
+         <str name="fields">subject</str>
+         <str name="signatureClass">solr.update.processor.Lookup3Signature</str>
+       </processor>
+       <processor class="solr.LogUpdateProcessorFactory" />
+       <processor class="solr.RunUpdateProcessorFactory" />
+     </updateRequestProcessorChain>
+
+    
+     <updateRequestProcessorChain name="dedupe_approx" default="true">
        <processor class="solr.processor.SignatureUpdateProcessorFactory">
          <bool name="enabled">true</bool>
-         <str name="signatureField">id</str>
+         <str name="signatureField">signature_approx</str>
          <bool name="overwriteDupes">false</bool>
-         <str name="fields">name,features,cat</str>
-         <str name="signatureClass">solr.processor.Lookup3Signature</str>
+         <str name="fields">subject</str>
+         <str name="signatureClass">solr.update.processor.TextProfileSignature</str>
        </processor>
        <processor class="solr.LogUpdateProcessorFactory" />
        <processor class="solr.RunUpdateProcessorFactory" />
@@ -1486,6 +1633,21 @@
        <processor class="solr.RunUpdateProcessorFactory" />
      </updateRequestProcessorChain>
     -->
+     <updateRequestProcessorChain name="langid" default="true">
+       <processor class="org.apache.solr.update.processor.LangDetectLanguageIdentifierUpdateProcessorFactory">
+         <str name="langid.fl">subject,content,attach,attach_content</str>
+         <str name="langid.langField">language</str>
+         <str name="langid.langsField">language</str>
+         <str name="langid.map">true</str>
+         <str name="langid.map.individual">true</str>
+         <str name="langid.whitelist">ru,en</str>
+         <str name="langid.treshold">0.9</str>
+         <str name="langid.fallback">ru</str>
+       </processor>
+       <processor class="solr.LogUpdateProcessorFactory" />
+       <processor class="solr.RunUpdateProcessorFactory" />
+     </updateRequestProcessorChain>
+
 
   <!-- Script update processor
 

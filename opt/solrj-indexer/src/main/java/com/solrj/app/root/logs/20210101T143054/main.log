@@ -1,0 +1,339 @@
+[2021-01-01 14:30:56.093] [main] [info] update#setState idle
+[2021-01-01 14:31:26.098] [main] [info] update#setState checking for updates
+[2021-01-01 14:31:26.151] [main] [info] update#setState idle
+[2021-01-01 15:31:26.200] [main] [info] update#setState checking for updates
+[2021-01-01 15:31:29.855] [main] [info] update#setState idle
+[2021-01-01 16:31:26.299] [main] [info] update#setState checking for updates
+[2021-01-01 16:31:27.938] [main] [info] update#setState idle
+[2021-01-01 17:31:26.487] [main] [info] update#setState checking for updates
+[2021-01-01 17:31:27.997] [main] [info] update#setState idle
+[2021-01-01 18:31:26.684] [main] [info] update#setState checking for updates
+[2021-01-01 18:31:27.751] [main] [info] update#setState idle
+[2021-01-01 19:31:26.710] [main] [info] update#setState checking for updates
+[2021-01-01 19:31:27.622] [main] [info] update#setState idle
+[2021-01-01 20:31:26.735] [main] [info] update#setState checking for updates
+[2021-01-01 20:31:27.270] [main] [info] update#setState idle
+[2021-01-01 21:31:26.926] [main] [info] update#setState checking for updates
+[2021-01-01 21:31:28.913] [main] [info] update#setState idle
+[2021-01-01 22:31:27.305] [main] [info] update#setState checking for updates
+[2021-01-01 22:31:27.832] [main] [info] update#setState idle
+[2021-01-01 23:31:27.397] [main] [info] update#setState checking for updates
+[2021-01-01 23:31:27.681] [main] [info] update#setState idle
+[2021-01-02 00:31:27.483] [main] [info] update#setState checking for updates
+[2021-01-02 00:33:38.269] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 00:33:38.270] [main] [info] update#setState idle
+[2021-01-02 01:31:27.584] [main] [info] update#setState checking for updates
+[2021-01-02 01:33:38.653] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 01:33:38.653] [main] [info] update#setState idle
+[2021-01-02 02:31:27.686] [main] [info] update#setState checking for updates
+[2021-01-02 02:33:36.912] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 02:33:36.913] [main] [info] update#setState idle
+[2021-01-02 03:31:27.786] [main] [info] update#setState checking for updates
+[2021-01-02 03:33:37.273] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 03:33:37.273] [main] [info] update#setState idle
+[2021-01-02 04:31:27.876] [main] [info] update#setState checking for updates
+[2021-01-02 04:33:37.657] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 04:33:37.657] [main] [info] update#setState idle
+[2021-01-02 05:31:27.995] [main] [info] update#setState checking for updates
+[2021-01-02 05:33:38.152] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 05:33:38.152] [main] [info] update#setState idle
+[2021-01-02 06:31:28.248] [main] [info] update#setState checking for updates
+[2021-01-02 06:33:38.425] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 06:33:38.425] [main] [info] update#setState idle
+[2021-01-02 07:31:28.328] [main] [info] update#setState checking for updates
+[2021-01-02 07:33:38.809] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 07:33:38.809] [main] [info] update#setState idle
+[2021-01-02 08:31:28.416] [main] [info] update#setState checking for updates
+[2021-01-02 08:33:39.193] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 08:33:39.193] [main] [info] update#setState idle
+[2021-01-02 09:31:28.505] [main] [info] update#setState checking for updates
+[2021-01-02 09:33:39.577] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 09:33:39.577] [main] [info] update#setState idle
+[2021-01-02 10:31:28.583] [main] [info] update#setState checking for updates
+[2021-01-02 10:33:39.980] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 10:33:39.980] [main] [info] update#setState idle
+[2021-01-02 11:19:51.529] [main] [error] [VS Code]: detected unresponsive
+[2021-01-02 11:31:28.960] [main] [info] update#setState checking for updates
+[2021-01-02 11:33:40.555] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 11:33:40.567] [main] [info] update#setState idle
+[2021-01-02 12:31:31.835] [main] [info] update#setState checking for updates
+[2021-01-02 12:33:45.184] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 12:33:45.184] [main] [info] update#setState idle
+[2021-01-02 13:31:33.444] [main] [info] update#setState checking for updates
+[2021-01-02 13:33:45.689] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-02 13:33:45.689] [main] [info] update#setState idle
+[2021-01-02 14:31:34.481] [main] [info] update#setState checking for updates
+[2021-01-02 14:31:42.463] [main] [info] update#setState idle
+[2021-01-02 15:05:04.859] [main] [error] [VS Code]: detected unresponsive
+[2021-01-02 15:31:37.108] [main] [info] update#setState checking for updates
+[2021-01-02 15:32:00.066] [main] [info] update#setState idle
+[2021-01-02 16:31:39.297] [main] [info] update#setState checking for updates
+[2021-01-02 16:31:41.093] [main] [info] update#setState idle
+[2021-01-02 17:31:39.466] [main] [info] update#setState checking for updates
+[2021-01-02 17:31:41.123] [main] [info] update#setState idle
+[2021-01-02 18:31:39.622] [main] [info] update#setState checking for updates
+[2021-01-02 18:31:42.063] [main] [info] update#setState idle
+[2021-01-02 19:31:40.008] [main] [info] update#setState checking for updates
+[2021-01-02 19:31:40.638] [main] [info] update#setState idle
+[2021-01-02 20:31:40.210] [main] [info] update#setState checking for updates
+[2021-01-02 20:31:41.955] [main] [info] update#setState idle
+[2021-01-02 21:31:40.365] [main] [info] update#setState checking for updates
+[2021-01-02 21:31:41.629] [main] [info] update#setState idle
+[2021-01-02 22:31:40.530] [main] [info] update#setState checking for updates
+[2021-01-02 22:31:42.983] [main] [info] update#setState idle
+[2021-01-02 23:31:40.932] [main] [info] update#setState checking for updates
+[2021-01-02 23:31:41.461] [main] [info] update#setState idle
+[2021-01-03 00:31:41.109] [main] [info] update#setState checking for updates
+[2021-01-03 00:33:51.562] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 00:33:51.562] [main] [info] update#setState idle
+[2021-01-03 01:31:41.309] [main] [info] update#setState checking for updates
+[2021-01-03 01:33:51.939] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 01:33:51.939] [main] [info] update#setState idle
+[2021-01-03 02:31:41.543] [main] [info] update#setState checking for updates
+[2021-01-03 02:33:52.267] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 02:33:52.268] [main] [info] update#setState idle
+[2021-01-03 03:31:41.679] [main] [info] update#setState checking for updates
+[2021-01-03 03:33:52.652] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 03:33:52.652] [main] [info] update#setState idle
+[2021-01-03 04:31:41.819] [main] [info] update#setState checking for updates
+[2021-01-03 04:33:53.057] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 04:33:53.057] [main] [info] update#setState idle
+[2021-01-03 05:31:42.107] [main] [info] update#setState checking for updates
+[2021-01-03 05:33:54.281] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 05:33:54.337] [main] [info] update#setState idle
+[2021-01-03 06:31:42.782] [main] [info] update#setState checking for updates
+[2021-01-03 06:33:56.502] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 06:33:56.502] [main] [info] update#setState idle
+[2021-01-03 07:31:43.842] [main] [info] update#setState checking for updates
+[2021-01-03 07:33:56.321] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 07:33:56.322] [main] [info] update#setState idle
+[2021-01-03 08:31:44.065] [main] [info] update#setState checking for updates
+[2021-01-03 08:33:54.553] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 08:33:54.553] [main] [info] update#setState idle
+[2021-01-03 09:31:44.279] [main] [info] update#setState checking for updates
+[2021-01-03 09:33:54.937] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 09:33:54.937] [main] [info] update#setState idle
+[2021-01-03 10:31:44.385] [main] [info] update#setState checking for updates
+[2021-01-03 10:33:55.321] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 10:33:55.321] [main] [info] update#setState idle
+[2021-01-03 11:31:44.432] [main] [info] update#setState checking for updates
+[2021-01-03 11:33:55.705] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 11:33:55.705] [main] [info] update#setState idle
+[2021-01-03 12:31:44.567] [main] [info] update#setState checking for updates
+[2021-01-03 12:33:56.170] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 12:33:56.170] [main] [info] update#setState idle
+[2021-01-03 13:31:44.653] [main] [info] update#setState checking for updates
+[2021-01-03 13:33:56.609] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 13:33:56.609] [main] [info] update#setState idle
+[2021-01-03 14:31:44.734] [main] [info] update#setState checking for updates
+[2021-01-03 14:33:54.840] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 14:33:54.840] [main] [info] update#setState idle
+[2021-01-03 15:31:44.887] [main] [info] update#setState checking for updates
+[2021-01-03 15:33:55.193] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 15:33:55.193] [main] [info] update#setState idle
+[2021-01-03 16:19:07.121] [main] [error] [VS Code]: detected unresponsive
+[2021-01-03 16:31:44.959] [main] [info] update#setState checking for updates
+[2021-01-03 16:33:55.593] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 16:33:55.594] [main] [info] update#setState idle
+[2021-01-03 17:31:45.298] [main] [info] update#setState checking for updates
+[2021-01-03 17:33:56.102] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 17:33:56.107] [main] [info] update#setState idle
+[2021-01-03 18:31:45.621] [main] [info] update#setState checking for updates
+[2021-01-03 18:33:56.690] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 18:33:56.690] [main] [info] update#setState idle
+[2021-01-03 19:31:46.058] [main] [info] update#setState checking for updates
+[2021-01-03 19:33:56.757] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 19:33:56.757] [main] [info] update#setState idle
+[2021-01-03 20:31:46.202] [main] [info] update#setState checking for updates
+[2021-01-03 20:34:01.378] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 20:34:01.379] [main] [info] update#setState idle
+[2021-01-03 21:31:46.398] [main] [info] update#setState checking for updates
+[2021-01-03 21:33:58.075] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 21:33:58.105] [main] [info] update#setState idle
+[2021-01-03 22:31:46.543] [main] [info] update#setState checking for updates
+[2021-01-03 22:33:58.073] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 22:33:58.074] [main] [info] update#setState idle
+[2021-01-03 23:31:46.622] [main] [info] update#setState checking for updates
+[2021-01-03 23:33:56.234] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-03 23:33:56.234] [main] [info] update#setState idle
+[2021-01-04 00:31:46.740] [main] [info] update#setState checking for updates
+[2021-01-04 00:33:56.733] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 00:33:56.733] [main] [info] update#setState idle
+[2021-01-04 01:31:46.851] [main] [info] update#setState checking for updates
+[2021-01-04 01:33:57.053] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 01:33:57.053] [main] [info] update#setState idle
+[2021-01-04 02:31:46.977] [main] [info] update#setState checking for updates
+[2021-01-04 02:33:57.387] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 02:33:57.387] [main] [info] update#setState idle
+[2021-01-04 03:31:47.114] [main] [info] update#setState checking for updates
+[2021-01-04 03:33:57.780] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 03:33:57.781] [main] [info] update#setState idle
+[2021-01-04 04:31:47.265] [main] [info] update#setState checking for updates
+[2021-01-04 04:33:58.156] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 04:33:58.156] [main] [info] update#setState idle
+[2021-01-04 05:31:47.494] [main] [info] update#setState checking for updates
+[2021-01-04 05:33:58.913] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 05:33:58.913] [main] [info] update#setState idle
+[2021-01-04 06:31:48.379] [main] [info] update#setState checking for updates
+[2021-01-04 06:33:59.445] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 06:33:59.446] [main] [info] update#setState idle
+[2021-01-04 07:31:49.695] [main] [info] update#setState checking for updates
+[2021-01-04 07:34:01.818] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 07:34:01.818] [main] [info] update#setState idle
+[2021-01-04 08:31:50.100] [main] [info] update#setState checking for updates
+[2021-01-04 08:34:01.752] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 08:34:01.753] [main] [info] update#setState idle
+[2021-01-04 09:31:50.324] [main] [info] update#setState checking for updates
+[2021-01-04 09:34:02.211] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 09:34:02.212] [main] [info] update#setState idle
+[2021-01-04 10:31:50.942] [main] [info] update#setState checking for updates
+[2021-01-04 10:34:03.148] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 10:34:03.149] [main] [info] update#setState idle
+[2021-01-04 11:31:51.725] [main] [info] update#setState checking for updates
+[2021-01-04 11:34:03.307] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 11:34:03.307] [main] [info] update#setState idle
+[2021-01-04 12:31:52.161] [main] [info] update#setState checking for updates
+[2021-01-04 12:34:03.337] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 12:34:03.337] [main] [info] update#setState idle
+[2021-01-04 13:31:52.367] [main] [info] update#setState checking for updates
+[2021-01-04 13:34:03.992] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 13:34:03.992] [main] [info] update#setState idle
+[2021-01-04 14:31:52.571] [main] [info] update#setState checking for updates
+[2021-01-04 14:34:04.025] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 14:34:04.025] [main] [info] update#setState idle
+[2021-01-04 15:31:52.635] [main] [info] update#setState checking for updates
+[2021-01-04 15:34:02.361] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 15:34:02.361] [main] [info] update#setState idle
+[2021-01-04 16:31:52.700] [main] [info] update#setState checking for updates
+[2021-01-04 16:34:02.745] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 16:34:02.745] [main] [info] update#setState idle
+[2021-01-04 17:31:52.772] [main] [info] update#setState checking for updates
+[2021-01-04 17:34:03.129] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 17:34:03.129] [main] [info] update#setState idle
+[2021-01-04 18:31:52.795] [main] [info] update#setState checking for updates
+[2021-01-04 18:34:03.513] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 18:34:03.513] [main] [info] update#setState idle
+[2021-01-04 19:31:52.852] [main] [info] update#setState checking for updates
+[2021-01-04 19:34:03.897] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 19:34:03.897] [main] [info] update#setState idle
+[2021-01-04 20:31:52.948] [main] [info] update#setState checking for updates
+[2021-01-04 20:34:04.281] [main] [error] Error: net::ERR_CONNECTION_TIMED_OUT
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:105:6395)
+    at SimpleURLLoaderWrapper.emit (events.js:223:5)
+[2021-01-04 20:34:04.281] [main] [info] update#setState idle
