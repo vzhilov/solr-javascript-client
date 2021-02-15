@@ -6,4 +6,5 @@ sudo apt install mvn
 
 # Run development version:
 cd solrj-indexer
+
 mvn clean compile exec:exec 
