@@ -7,6 +7,9 @@ Main configuration file with all the date processors definitions.
 # managed-schema
 Main index file defining all index fields
 
+# Restart Solr after any configuration changes:
+sudo -u solr /opt/solr/bin/solr restart -s /mnt/solr/data -Duser.language=ru -Duser.country=RU -Duser.timezone=Europe/Moscow
+
 # Update Solr core on the fly
 curl http://localhost:8983/solr/mycore/update?commit=ture
 
