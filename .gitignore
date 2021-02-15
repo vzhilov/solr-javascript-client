@@ -3,6 +3,7 @@ bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+opt/solrj-indexer/src/main/java/com/solrj/app/root/
 
 # Other files and folders
 .settings/
