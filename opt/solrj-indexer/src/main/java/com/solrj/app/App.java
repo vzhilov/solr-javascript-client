@@ -29,7 +29,7 @@ import java.util.Locale;
 import java.text.SimpleDateFormat;
 import java.text.BreakIterator;
 
-import java.sql.*;
+//import java.sql.*;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -69,19 +69,22 @@ public class App {
      */
     private static final SolrClient solrClient = getSolrClient();
 
+    private static final SolrClient getSolrClient() {
+	return new HttpSolrClient.Builder(SOLR_CORE_URL).withConnectionTimeout(50000).withSocketTimeout(30000).build();
+    }
+
     public static void main(String[] args) {
         System.out.println("======== SolrJ Example ========");
         App example = new App();
 
         // Clear index
-        /*                        
+        /*                               
         try {
-            solrClient.deleteByQuery("search_area:sf");
+            solrClient.deleteByQuery("*:*");
         } catch (SolrServerException | IOException e) {
             System.err.printf("\nFailed to index articles: %s", e.getMessage());
         }
-        */
-
+	 */
 
 
         try {
@@ -99,7 +102,7 @@ public class App {
 
 
     public void indexFiles() {
-        Path dir = Paths.get("/mnt/server/BackUps/Mimeo");
+        Path dir = Paths.get("/mnt/data/public");
         try {
             Files.walk(dir).forEach(path -> reallyIndexFiles(path.toFile()));
         } catch (Exception ex ) {
@@ -273,4 +276,4 @@ public class App {
         }
         return sent;
     }
-
+}
