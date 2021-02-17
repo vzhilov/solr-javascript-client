@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileTime;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -74,29 +75,45 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println("======== SolrJ Example ========");
+		long cTime = System.currentTimeMillis();
+		String sTime = FileTime.fromMillis(cTime).toString();
+        System.out.printf("======== SolrJ Indeer has started: %s ========\n", sTime);
         App example = new App();
 
         // Clear index
-        /*                               
+        /*                               	 		
         try {
             solrClient.deleteByQuery("*:*");
         } catch (SolrServerException | IOException e) {
             System.err.printf("\nFailed to index articles: %s", e.getMessage());
         }
-	 */
-
-
+		*/
+		
         try {
             solrClient.commit();
         } catch (SolrServerException | IOException e) {
             System.err.printf("\nFailed to index articles: %s", e.getMessage());
         }
 
-        //System.exit(0);
+		SolrQuery ts = new SolrQuery();
+		ts.setQuery("*:*");
+		ts.addFilterQuery("last_added: [NOW-5MINUTE TO NOW]");
 
-        example.indexFiles();
-
+		// Cron runs this script every 5 minutes. If no documents were added for the last 5 minutes it means Tika parser failed on a faulty file and the script exited. So we start all over ignoring the faulty file.
+		try {					
+			QueryResponse tsRes = solrClient.query(ts);
+			SolrDocumentList tsDocs = tsRes.getResults();
+			int tsNumFound = (int) tsDocs.getNumFound();
+			if (tsNumFound == 0) {
+				example.indexFiles();
+			} else {
+				System.out.printf("*****   Another Indexer is running. Quiting...   *****\n");
+				return;					
+			}
+		} catch (Exception ex ) {
+			System.out.printf("*****   Solr Query failed   *****\n");
+			ex.printStackTrace();            
+		}		
     }
 
 
@@ -124,74 +141,106 @@ public class App {
             String relFullPath = relPath + "/" + fileName;
             String title = fileName.substring(0, fileName.lastIndexOf("."));
             String search_area = "public";
-            String uid = search_area + relFullPath.hashCode();
+            String uid = search_area + relFullPath.hashCode();			
 
-            try {    
+			final AutoDetectParser autoParser = new AutoDetectParser();
 
-                final AutoDetectParser autoParser = new AutoDetectParser();
+			TesseractOCRConfig tessConf = new TesseractOCRConfig();
+			tessConf.setLanguage("rus+eng");
+			tessConf.setEnableImageProcessing(1);
 
-                TesseractOCRConfig tessConf = new TesseractOCRConfig();
-                tessConf.setLanguage("rus+eng");
-                tessConf.setEnableImageProcessing(1);
+			PDFParserConfig pdfConf = new PDFParserConfig();
+			pdfConf.setOcrDPI(300);
+			pdfConf.setDetectAngles(true);
+			pdfConf.setOcrStrategy(PDFParserConfig.OCR_STRATEGY.NO_OCR);
 
-                PDFParserConfig pdfConf = new PDFParserConfig();
-                pdfConf.setOcrDPI(300);
-                pdfConf.setDetectAngles(true);
-                pdfConf.setOcrStrategy(PDFParserConfig.OCR_STRATEGY.NO_OCR);
+			final ParseContext context = new ParseContext();            
+			context.set(TesseractOCRConfig.class, tessConf);
+			context.set(PDFParserConfig.class, pdfConf);
 
-                final ParseContext context = new ParseContext();            
-                context.set(TesseractOCRConfig.class, tessConf);
-                context.set(PDFParserConfig.class, pdfConf);
+			SolrClient solrClientNew = getSolrClient();
 
-                SolrClient solrClientNew = getSolrClient();
+			// Check if document exists
+			SolrQuery sq = new SolrQuery();
+			sq.setQuery("*:*");
+			sq.addFilterQuery("id:" + uid);
 
-                // Check if document exists
-                SolrQuery sq = new SolrQuery();
-                sq.setQuery("*:*");
-                sq.addFilterQuery("id:" + uid);
-                QueryResponse res_uid = solrClientNew.query(sq);
-                SolrDocumentList docs_uid = res_uid.getResults();
-                int numfound_uid = (int) docs_uid.getNumFound();
-                if (numfound_uid != 0) {
-                    System.out.printf("*****   Already exists. Skpping...   *****\n");
-                    return;
-                }
+			int numfound_uid = 0;
+			try {					
+				QueryResponse res_uid = solrClientNew.query(sq);
+				SolrDocumentList docs_uid = res_uid.getResults();
+				numfound_uid = (int) docs_uid.getNumFound();
+			} catch (Exception ex ) {
+				System.out.printf("*****   Solr Query failed   *****\n");
+				ex.printStackTrace();            
+			}
+			
+			
+			if (numfound_uid != 0) {
+				System.out.printf("*****   Already exists. Skpping...   *****\n");
+				return;
+			} 
 
+			// Add basic data to the document
+			final SolrInputDocument doc = new SolrInputDocument();
+			doc.addField("id", uid);
+			doc.addField("search_area", search_area);
+			doc.addField("subject", title);
+			doc.addField("attach_dir", relPath);
+			doc.addField("attach", fileName);
 
-                final SolrInputDocument doc = new SolrInputDocument();
-                doc.addField("id", uid);
-                doc.addField("search_area", search_area);
-                doc.addField("subject", title);
-                doc.addField("attach_dir", relPath);
-                doc.addField("attach", fileName);
+			// Store the file time for further update check
+			try {
+				FileTime ft = Files.getLastModifiedTime(file.toPath());
+				doc.addField("last_modified", ft.toString());
+				long curTime = System.currentTimeMillis();
+				ft = FileTime.fromMillis(curTime);
+				doc.addField("last_added", ft.toString());
+				System.out.printf("%s: %s\n", ft.toString(), relFullPath);
 
-                final FileInputStream input = new FileInputStream(fullPath);
+			} catch (Exception ex ) {
+				System.out.printf("*****   Failed to check file date/time   *****\n");
+				ex.printStackTrace();            
+			}
 
-                ContentHandler textHandler = new BodyContentHandler(-1);
-                Metadata metadata = new Metadata();
-                
-                autoParser.parse(input, textHandler, metadata, context);
+			// We add empty file content in case the content extraction will fail
+			String attach_text = "";
+			doc.addField("attach_content", attach_text);
 
-                String attach_text = textHandler.toString();
+			// Adding new document wit empy content to the index 
+			try {
+				solrClientNew.add(doc);
+			} catch (Exception ex ) {
+				ex.printStackTrace();            
+			}
 
-                doc.addField("attach_content", attach_text);
+			// Let try to extact the actual file content
+			
+			
+			try {
+				final FileInputStream input = new FileInputStream(fullPath);
+				ContentHandler textHandler = new BodyContentHandler(-1);
+				Metadata metadata = new Metadata();
+				autoParser.parse(input, textHandler, metadata, context);
+				attach_text = textHandler.toString();
+			} catch (Exception ex ) {
+				System.out.printf("*****   Tika Parser failed ...   *****\n");
+				ex.printStackTrace();            
+			}
 
+			doc.setField("attach_content", attach_text);
 
-                for(String oneSentece : breakInSenteces(attach_text)) {
-                    doc.addField("files_sgs", oneSentece);
-                }
+			// Break extracted content on sentences for search suggester building
+			for(String oneSentece : breakInSenteces(attach_text)) {
+				doc.addField("files_sgs", oneSentece);
+			}
 
-
-                try {
-                    solrClientNew.add(doc);
-                    System.out.printf("File: %s\n", relFullPath);
-                } catch (Exception ex ) {
-                    ex.printStackTrace();            
-                }
-
-            } catch (Exception ex ) {
-                ex.printStackTrace();            
-            }
+			// Adding final document with extracted content to the index
+			try {
+				solrClientNew.add(doc);
+			} catch (Exception ex ) {
+				ex.printStackTrace();            
+			}
         }
     }
 
