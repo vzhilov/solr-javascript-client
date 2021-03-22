@@ -48,36 +48,31 @@
                     SolrInputDocument doc = new SolrInputDocument();
 
                     for (SolrDocument document : documents) {
-
-                        string fileName = document.getFieldValue("id");
                         
-                        
-                        //System.out.printf("Id = %s\n", doc);
-                        //System.exit(0);
+                        String pathPrefix = "/mnt/data/public/";
+                        String path = document.getFieldValue("id").toString();
 
-                        // send the documents to Solr
-                        try {
-                            //System.out.printf("Adding the doc...\n");
-                            solrClient.add(doc);
-                            Thread.sleep(0);
-                            //System.out.printf("Successfully added...\n");
-                        } catch (SolrServerException | IOException | InterruptedException e ) {
-                            System.err.printf("\nFailed to index articles: %s", e.getMessage());
+                        File fileName = new File(pathPrefix + path);
+                        
+                        if (!fileName.isFile()) {
+                            // remove deleted document
+                            try {
+                                //System.out.printf("Adding the doc...\n");
+                                solrClient.deleteByQuery("id:" + document.getFieldValue("id"));
+                            } catch (SolrServerException | IOException e ) {
+                                System.err.printf("\nFailed to delete a document: %s", e.getMessage());
+                            }
                         }
                     }
-                    
-                    try {
-                        System.out.printf("Committing...\n");
-                        solrClient.commit();
-                        System.out.printf("Successfully commited...\n");
-                        //System.exit(0);
-                    } catch (SolrServerException | IOException e) {
-                        System.err.printf("\nFailed to index articles: %s", e.getMessage());
-                    }
-                    
                 }
-
+            }
+            try {
+                System.out.printf("Committing...\n");
+                solrClient.commit();
+                System.out.printf("Successfully commited...\n");
+                //System.exit(0);
+            } catch (SolrServerException | IOException e) {
+                System.err.printf("\nFailed to index articles: %s", e.getMessage());
             }
        }
-
     }
