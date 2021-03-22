@@ -1,11 +1,11 @@
-    public void reindexArea(String area) {
+    public void excludeDeleted() {
         System.out.println("Re-Indexing by Atomic Updates...");
         SolrClient solrClient = getSolrClient();
 
         // constructs a MapSolrParams instance
         Map<String, String> queryParamMap = new HashMap<String, String>();
 
-        queryParamMap.put("q", "id" + ":*");
+        queryParamMap.put("q", "id:*");
         queryParamMap.put("rows", "0");
 
         MapSolrParams queryParams = null;
@@ -22,17 +22,16 @@
             SolrDocumentList documents = response.getResults();
             //System.out.printf("Found %d documents\n", documents.getNumFound());
             long numFound = documents.getNumFound();
-            //numFound = 353000;
             int rows = 1000;
             long max_id_page = (long) Math.round(Math.ceil((double) numFound / rows));
             for (int n = 0; n < max_id_page; n++) {
                 long start = n * rows;
                 //int id_end = max_id - n * id_page;
                 queryParamMap = new HashMap<String, String>();
-                queryParamMap.put("q", "id" + ":*");
+                queryParamMap.put("q", "id:*");
                 queryParamMap.put("start", String.valueOf(start));
                 queryParamMap.put("rows", String.valueOf(rows));
-                //queryParamMap.put("logParamsList", "q");
+                queryParamMap.put("fl", "id");
                 
                 queryParams = new MapSolrParams(queryParamMap);
                 System.out.printf("The range is: %d + %d rows out of %d\n", start, rows, numFound); 
@@ -50,26 +49,9 @@
 
                     for (SolrDocument document : documents) {
 
-                        //System.out.printf("Id = %s\n", document);
-//                        System.exit(0);
+                        string fileName = document.getFieldValue("id");
                         
-                        doc = new SolrInputDocument();
-
-                        doc.addField("id", document.getFieldValue("id"));
-                        doc.addField("real_id", document.getFieldValue("real_id"));
-                        doc.addField("search_area", document.getFieldValue("search_area"));
-                        doc.addField("from", document.getFieldValue("from"));
-                        doc.addField("last_modified", document.getFieldValue("last_modified"));
-                        doc.addField("attach_dir", document.getFieldValue("attach_dir"));
-
-                        doc = copyMultiField(document, "subject", doc, true, false);
-                        doc = copyMultiField(document, "content", doc, true, true);
-                        doc = copyMultiField(document, "attach", doc, true, false);
-                        doc = copyMultiField(document, "attach_content", doc, true, true);
-                        doc = copyMultiField(document, "user_id", doc, false, false);
-                        doc = copyMultiField(document, "to", doc, false, false);
-
-
+                        
                         //System.out.printf("Id = %s\n", doc);
                         //System.exit(0);
 
