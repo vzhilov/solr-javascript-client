@@ -89,10 +89,12 @@ managed_schema:
 
 working by: http://localhost:8983/solr/test/suggest?suggest=true&suggest.build=true&suggest.dictionary=mySuggester&suggest.q=apple
   
- # Step 6 – Index your files
+ # Step 7 – Index your files
  sudo -u solr /opt/solr/bin/post -c mycol1 rootDir/ -m1024M
  
- # Step 6 – Setup the webinterface
+ # Step 8 – Setup the webinterface
  Copy /www/html folder into your webserver and configure conf/conf.js
  
+ # Step 9 - Setup regular indexing by Cron
+ */5 15-22 * * 2-3 cd /opt/solrj-indexer; mvn exec:exec > indexer.log
  
