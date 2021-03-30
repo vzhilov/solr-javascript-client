@@ -96,5 +96,5 @@ working by: http://localhost:8983/solr/test/suggest?suggest=true&suggest.build=t
  Copy /www/html folder into your webserver and configure conf/conf.js
  
  # Step 9 - Setup regular indexing by Cron
- */5 15-22 * * 2-3 cd /opt/solrj-indexer; mvn exec:exec > indexer.log
+ `*/5 15-22 * * 2-3 cd /opt/solrj-indexer; mvn exec:exec > indexer.log`
  
