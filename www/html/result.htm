@@ -22,20 +22,36 @@
 			const urlParams = new URLSearchParams(window.location.search);
 			const docId = urlParams.get('id');
 			const q = urlParams.get('q');
+			console.log(q);
+			const s = "subject_ru:(" + q + ") attach_content_ru:(" + q + ") subject_en:(" + q + ") attach_content_en:(" + q + ")";
 			
 			let formData = new FormData(); 
  		    formData.append('hl', 'on');
-			formData.append('hl.fl', 'content');
+			formData.append("hl.fl", "subjec_ru,subject_en,attach_content_ru,attach_content_en");
 			formData.append('hl.fragsize', -1);
 
 			formData.append('fq', 'id:"' + docId + '"');
-			formData.append("q", q);
+			formData.append("q", s);
 			let xmlHttp = new XMLHttpRequest();
 			xmlHttp.onreadystatechange = function() {
 				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					const resSolr = JSON.parse(xmlHttp.responseText);
-					let doc = resSolr.highlighting[docId].content[0].trim();
 
+					let doc = "";
+
+					if (Object.keys(resSolr).length > 0) {
+						if (Object.keys(resSolr.highlighting).length > 0) {
+							if (Object.keys(resSolr.highlighting[docId]).length > 0) {
+								doc = getFieldVal(resSolr.highlighting[docId], "attach_content")[0].trim();
+							}
+						}
+						if (doc == "" && resSolr.response.docs[0] != undefined) {
+							doc = getFieldVal(resSolr.response.docs[0], "attach_content")[0].trim();
+						}
+					}
+					
+					if (doc == "") doc = "Content is not found";
+					
 					doc = doc.split('\n').join('<br>');
 
 					const serpBody = document.getElementsByClassName('res_main')[0]
@@ -88,6 +104,12 @@ function keyChange(dir) {
 		counterPub.innerText = (curEl-m) + " из " + (allMatches.length-2)
 	}
 }	
+
+function getFieldVal(result, field) {
+	if (result[field + "_ru"] != undefined) return result[field + "_ru"];
+	else return result[field + "_en"];
+}
+
 </script>
 </head>
 <body onload="domLoaded();">

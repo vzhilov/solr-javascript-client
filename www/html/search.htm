@@ -35,7 +35,7 @@
 		}
 
 		let formData = new FormData(); 
-		formData.append("q", "*");
+		formData.append("q", "id:*");
 		formData.append("rows", 0);
 		
 		var xmlHttp = new XMLHttpRequest();
@@ -81,6 +81,9 @@
 
         <ul class="serp__nav">
           <li>Найдено <span id="docsFound">0</span> документов</li>
+          <li class="params"> | Установить между искомыми:
+			<span class="search-params prox" onClick="fillApprox();">не более 5 слов</span>
+		  </li>
         </ul>
 
       </div>
@@ -116,9 +119,10 @@
       </div>
       <div class="serp__sidebar">
         <div class="serp__sticky">
-          <div class="serp__headline">Похожие результаты</div>
+          <div class="serp__headline">
+			<h2>Похожие запросы:</h2>
+		  </div>
           <div class="serp__wiki">
-            <h2>Возможно вы ищите:</h2>
 			<div class="suggester"></div>
 
           </div>
@@ -150,15 +154,16 @@ function searchGo(page = 0) {
 	.classList.remove("unvisible");
 
   const q = document.getElementsByName("q")[0].value
+  const s = "subject_ru:(" + q + ") attach_content_ru:(" + q + ") subject_en:(" + q + ") attach_content_en:(" + q + ")";
   const resPerPage = 20
   const row = page * resPerPage
 
   let formData = new FormData(); 
   formData.append("hl", "on");
-  formData.append("hl.fl", "content");
+  formData.append("hl.fl", "attach_content_ru,attach_content_en");
   formData.append("start", row);
   formData.append("rows", resPerPage);
-  formData.append("q", q);
+  formData.append("q", s);
   
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
@@ -169,6 +174,8 @@ function searchGo(page = 0) {
 	  const resSolr = JSON.parse(xmlHttp.responseText);
 	  const docsFound = resSolr.response.numFound;
 	  const docsArray = resSolr.response.docs
+
+//console.log(resSolr);
 
 	  const docsFoundEl = document.getElementById("docsFound");
 	  docsFoundEl.innerHTML = docsFound;
@@ -205,9 +212,11 @@ function searchGo(page = 0) {
 		  // Output search results
 		  docsArray.forEach(function(singleDoc) {
 			const resKey = singleDoc.id
-			const resTitle = singleDoc.id
-			const resPath = singleDoc.resourcename
-			const hca = resSolr.highlighting[resKey].content;
+			let resDate = singleDoc.last_modified.replace("T", " ").replace("Z", "");
+			resDate = resDate.substr(0, resDate.lastIndexOf(":"));
+			const resTitle = getFieldVal(singleDoc, "subject");
+			const resPath = singleDoc.attach_dir + "/" + getFieldVal(singleDoc, "attach") + "<span class='serp-sep'> | </span><span class='serp-date'>" + resDate + "</span>";
+			const hca = getFieldVal(resSolr.highlighting[resKey], "attach_content");
 			let resExcerpt = "";
 			if (hca != undefined) {
 			  hca.forEach(function(item) {
@@ -215,9 +224,9 @@ function searchGo(page = 0) {
 			  })
 			}
 			
-			const resEntryHtml = '<a href="/res.htm?id=' + resKey + '&q=' + q + '" target="_blank">\
-				  <div class="serp__title">' + resTitle.replace(/^.*[\\\/]/, '') + '</div></a>\
-				    <div class="serp__url">Общая' + resPath.substring(16) + '</div>\
+			const resEntryHtml = '<a href="/result.htm?id=' + resKey + '&q=' + q.replace(/[^а-яА-Яa-zA-Z ]+/g, '') + '" target="_blank">\
+				  <div class="serp__title">' + resTitle + '</div></a>\
+				    <div class="serp__url">Общая/' + resPath + '</div>\
 				<span class="serp__description">' + resExcerpt + '</span>';
 			  //</div>';
 			const resEntry = document.createElement('div');
@@ -251,63 +260,72 @@ function searchGo(page = 0) {
   
   
   
-  let formDataSuggest = new FormData(); 
-
-  //formDataSuggest.append("spellcheck.build", "true");
-  //formDataSuggest.append("spellcheck.reload", "true");
-  formDataSuggest.append("spellcheck", "on");
-  const spellq = q.slice(0, -1);
-  console.log(spellq);
-  formDataSuggest.append("spellcheck.q", spellq);
   
-  var xmlHttpSuggest = new XMLHttpRequest();
-  xmlHttpSuggest.onreadystatechange = function() {
-    if (xmlHttpSuggest.readyState == 4 && xmlHttpSuggest.status == 200) {
-	  //document.getElementsByClassName("magnifying-container-sm")[0]
-		//.classList.add("unvisible");
+  let suggestArray = [];
 
-	  const resSolr = JSON.parse(xmlHttpSuggest.responseText);
-	  console.log(resSolr)
-	  //const docsFound = resSolr.response.numFoun;
-	  const suggestArray = resSolr.spellcheck.suggestions[1].suggestion
-	  console.log(suggestArray)
-	  const docsSuggestEl = document.getElementsByClassName("suggester")[0];
-	  docsSuggestEl.innerHTML = '';
+  q.split(" ").forEach(function(qWord) {
 
-		const freqArray = suggestArray.map(a => a.freq)
-		const min = Math.min.apply(null, freqArray),
-		max = Math.max.apply(null, freqArray);
-		const freqStep = max - min
-		const fontMin = 10
-		const fontMax = 24
-		const fontStep = fontMax - fontMin
-		const fontq = freqStep/fontStep
-		
-	  if (suggestArray.length > 0) {
+	  let formDataSuggest = new FormData(); 
 
-		  // Output suggest results
-		  suggestArray.forEach(function(singleSuggest) {
-			const suggestWord = singleSuggest.word
-			const suggestFreq = singleSuggest.freq
-			const suggestFont = Math.floor(suggestFreq/fontq)+fontMin
+	  //formDataSuggest.append("spellcheck.build", "true");
+	  //formDataSuggest.append("spellcheck.reload", "true");
+	  formDataSuggest.append("spellcheck", "on");
+
+  
+	  const spellq = qWord.slice(0, -1);
+	  //console.log(spellq);
+	  formDataSuggest.append("spellcheck.q", spellq);
+	  
+	  var xmlHttpSuggest = new XMLHttpRequest();
+	  xmlHttpSuggest.onreadystatechange = function() {
+		if (xmlHttpSuggest.readyState == 4 && xmlHttpSuggest.status == 200) {
+		  //document.getElementsByClassName("magnifying-container-sm")[0]
+			//.classList.add("unvisible");
+
+		  const resSolr = JSON.parse(xmlHttpSuggest.responseText);
+		  //console.log(resSolr)
+		  //const docsFound = resSolr.response.numFoun;
+			const docsSuggestEl = document.getElementsByClassName("suggester")[0];
+			docsSuggestEl.innerHTML = '';
+
+		  if (resSolr.spellcheck != undefined && resSolr.spellcheck.suggestions.length > 0) {
+
+			  suggestArray = suggestArray.concat(resSolr.spellcheck.suggestions[1].suggestion)
+			  //console.log(suggestArray)
+
+			  const freqArray = suggestArray.map(a => a.freq)
+			  const min = Math.min.apply(null, freqArray),
+			  max = Math.max.apply(null, freqArray);
+			  const freqStep = max - min
+			  const fontMin = 10
+			  const fontMax = 24
+			  const fontStep = fontMax - fontMin
+			  const fontq = freqStep/fontStep
 			
-			const sugEntryHtml = '<a href="/serp.htm?q=' + suggestWord + '" target="_blank">\
-				  <span style="font-size:' + suggestFont + 'px">' + suggestWord + ' (' + suggestFreq + ')</span></a>';
-			docsSuggestEl.insertAdjacentHTML('beforeend', sugEntryHtml);
-		  })
-		} else {
 
-			const sugEntryHtml = '<p><strong>Для запрос &laquo;' + q + '&raquo; рекомендаций нет </strong></p>';
-   
-			const sugEntry = document.createElement('div');
-			docsSuggestEl.append(sugEntryHtml);		
+			  // Output suggest results
+			  suggestArray.forEach(function(singleSuggest) {
+				const suggestWord = singleSuggest.word
+				const suggestFreq = singleSuggest.freq
+				const suggestFont = Math.floor(suggestFreq/fontq)+fontMin
+				
+				const sugEntryHtml = '<a href="/serp.htm?q=' + suggestWord + '" target="_blank">\
+					  <span style="font-size:' + suggestFont + 'px">' + suggestWord + ' (' + suggestFreq + ')</span></a>';
+				docsSuggestEl.insertAdjacentHTML('beforeend', sugEntryHtml);
+			  })
+			} else {
 
+				const sugEntryHtml = '<p>Для запроса <strong>&laquo;' + q + '&raquo;</strong> рекомендаций нет </p>';
+	   
+				const sugEntry = document.createElement('div');
+				docsSuggestEl.insertAdjacentHTML('beforeend', sugEntryHtml);		
+
+			}
 		}
-    }
-  }
-  xmlHttpSuggest.open("POST", "http://" + host + ":8983/solr/" + collection + "/spell");  
-  xmlHttpSuggest.send(formDataSuggest);  
-  
+	  }
+	  xmlHttpSuggest.open("POST", "http://" + host + ":8983/solr/" + collection + "/spell");  
+	  xmlHttpSuggest.send(formDataSuggest);  
+  })  
 }
 
 function pageChange(dir) {
@@ -315,7 +333,17 @@ function pageChange(dir) {
 	const curPageN = curPageEl.getAttribute('page');
 	if (dir > 0) searchGo(Number(curPageN) + 1)
 	else searchGo(Number(curPageN) - 1)
+}
 
+function getFieldVal(result, field) {
+	if (result[field + "_ru"] != undefined) return result[field + "_ru"];
+	else return result[field + "_en"];
+}
+
+function fillApprox() {
+	document.getElementsByClassName("search-params")[0].classList.remove("prox");
+	let q = '"' + document.getElementsByName("q")[0].value.split('"').join('').split('~5').join('') + '"~5';
+	document.getElementsByName("q")[0].value = q;
 }
 </script>  
 </body>

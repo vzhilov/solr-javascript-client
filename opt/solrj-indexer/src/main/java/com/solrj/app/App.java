@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -80,7 +82,6 @@ public class App {
     private static int heapDocs, totalDoc, inIndex = 0;
 
     private static String indexRoot = "/mnt/data/public/";
-
 
     private static final SolrClient getSolrClient() {
 	return new HttpSolrClient.Builder(SOLR_CORE_URL).withConnectionTimeout(50000).withSocketTimeout(30000).build();
@@ -148,6 +149,8 @@ public class App {
 
 
 
+/*
+// Usefull for first run through
 
 		try {					
 			SolrQuery ts = new SolrQuery();
@@ -161,7 +164,20 @@ public class App {
 			ex.printStackTrace();
 			return;
 		}		
+*/
 
+		try {					
+            File trackFile = new File("track.log");
+            if (trackFile.isFile()) {
+				String trackFileContent = new String(Files.readAllBytes(Paths.get("track.log")));
+				System.out.printf("Indexed so far %s", trackFileContent);
+				inIndex = Integer.parseInt(trackFileContent.trim());
+			} else {
+				inIndex = 0;
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}		
 
 		// Cron runs this script every 5 minutes. If no documents were added for the last 5 minutes it means Tika parser failed on a faulty file and the script exited. So we start all over ignoring the faulty file.
 		try {					
@@ -192,13 +208,22 @@ public class App {
 		
 		try {
 		Stream<Path> files = Files.walk(dir);
-		//long dirCount = files.peek(reallyIndexFiles()).count();
+
+			// Index all files
             files.forEach(path -> reallyIndexFiles(path.toFile()));
+
+			// Delete tracking file used for resuming
+            File trackFile = new File("track.log");
+            if (trackFile.isFile()) {
+				trackFile.delete();
+			}
+
 
 		} catch (IOException e) {
            System.err.printf("\nFailed to scan files: %s", e.getMessage());
  
 		}
+		
     }
 
 
@@ -217,9 +242,9 @@ public class App {
 
 		
         if (file.isFile() && fileName.lastIndexOf(".") >= 0) {
-			totalDoc++;
+			totalDoc++;			
 	
-			//if (totalDoc < (inIndex - 100)) return;
+			if (totalDoc < (inIndex - 100)) return;
 
 			System.out.printf("%d. %s", totalDoc, relFullPath);
 	
@@ -285,7 +310,16 @@ public class App {
 					} catch (SolrServerException | IOException e) {
 						System.err.printf("\nFailed to index articles: %s\n", e.getMessage());
 					}
+
+					try {
+						PrintWriter trackFile = new PrintWriter("track.log");
+						trackFile.println(totalDoc);
+						trackFile.close();
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();            
+					}						
 					heapDocs = 0;
+					
 					//System.exit(0);
 				} else {
 					heapDocs++;

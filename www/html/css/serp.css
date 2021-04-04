@@ -441,7 +441,12 @@ a .serp__title:hover {
   line-height: normal;
 }
 
-.serp__match {
+.serp__description .serp__match {
+  /* color: var(--color); */
+  font-weight: bold;
+}
+
+.res_main .serp__match {
   color: var(--color);
   font-weight: bold;
 }
@@ -996,6 +1001,24 @@ a .serp__title:hover {
 .suggester a {
 	text-decoration: none;
 	margin-right: 5px;
+}
+
+.serp-sep {
+	color: black;
+}
+
+.serp-date {
+	color: gray;
+}
+
+.params {
+	margin-left: 5px;
+	color: gray;
+}
+
+.search-params {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 /* ------- EOF ------- */
